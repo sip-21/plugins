@@ -97,8 +97,10 @@ jobs:
         # Fetch and checkout branches to permit the 'git diff' below
         git fetch && git checkout ${{ github.base_ref }}
         source_repo="${{ github.event.pull_request.head.repo.full_name }}"
-        echo "Source repository name is $source_repo"
-        git fetch https://github.com/$source_repo.git ${{ github.head_ref }}:${{ github.head_ref }}
+        if [ $source_repo != '' ]; then
+          echo "Source repository name is $source_repo"
+          git fetch https://github.com/$source_repo.git ${{ github.head_ref }}:${{ github.head_ref }}
+        fi
         git checkout ${{ github.head_ref }}
 
         # Collect the plugins that have changed by doing a `git diff`. In the case of a PR the diff
