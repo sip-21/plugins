@@ -39,7 +39,9 @@ jobs:
     - name: Download Core Lightning latest & install binaries
       id: cln-latest-install
       run: |
-        url=$(curl -s https://api.github.com/repos/ElementsProject/lightning/releases/latest | jq '.assets[] | select(.name | contains("22.04")) | .browser_download_url' | tr -d '\"')
+        url=$(curl -s https://api.github.com/repos/ElementsProject/lightning/releases/latest \
+          | jq '.assets[] | select(.name | contains("22.04")) | .browser_download_url' \
+          | tr -d '\"')
         wget $url
         sudo tar -xvf ${url##*/} -C /usr/local --strip-components=2
         echo "CLN_VERSION=$(lightningd --version)" >> "$GITHUB_OUTPUT"
@@ -93,10 +95,22 @@ jobs:
         pip3 install --user -U virtualenv pip > /dev/null
 
         # Fetch and checkout branches to permit the 'git diff' below
-        git fetch && git checkout ${{ github.base_ref }} && git checkout ${{ github.head_ref }}
+        git fetch && git checkout ${{ github.base_ref }}
+        source_repo="${{ github.event.pull_request.head.repo.full_name }}"
+        echo "Source repository name is $source_repo"
+        git fetch https://github.com/$source_repo.git ${{ github.head_ref }}:${{ github.head_ref }}
+        git checkout ${{ github.head_ref }}
 
-        # Collect the plugins that have changed
-        plugin_dirs=$(git diff --name-only ${{ github.base_ref }} ${{ github.head_ref }} | cut -d "/" -f1 | uniq | grep -v '^\.' | while read -r line; do [ -d "$line" ] && [[ "$line" != "archived" ]] && echo $line; done)
+        # Collect the plugins that have changed by doing a `git diff`. In the case of a PR the diff
+        # is done between the target branch and the source branch that triggered the workflow. In the case
+        # of a 'push' to master the diff will be empty and hence, all plugins are going to be tested.
+        echo "Using 'git diff ${{ github.base_ref }} ${{ github.head_ref }}' to check which plugins changed."
+        plugin_dirs=$(git diff --name-only ${{ github.base_ref }} ${{ github.head_ref }} \
+          | cut -d "/" -f1 \
+          | uniq \
+          | grep -v '^\.' \
+          | grep -v 'archived' \
+          | while read -r line; do [ -d "$line" ] && echo $line; done)
 
         # Run the tests
         python3 .ci/test.py $(echo "$plugin_dirs")
