@@ -250,7 +250,6 @@ Python plugins developers must ensure their plugin to work with all Python versi
 [sitzprobe]: https://github.com/niftynei/sitzprobe
 [sling]: https://github.com/daywalker90/sling
 [sparko]: https://github.com/fiatjaf/sparko
-[summars]: https://github.com/daywalker90/summars
 [summary]: https://github.com/lightningd/plugins/tree/master/archived/summary
 [trustedcoin]: https://github.com/fiatjaf/trustedcoin
 [ts-api]: https://github.com/runcitadel/c-lightning.ts
