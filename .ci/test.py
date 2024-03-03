@@ -120,7 +120,7 @@ def prepare_env_poetry(p: Plugin, directory: Path) -> bool:
     subprocess.check_call(['which', 'python3'])
 
     subprocess.check_call([
-        pip3, 'install', '-U', *pip_opts, 'pip', 'wheel', 'poetry', 'qrcode==6.1'
+        pip3, 'install', '-U', *pip_opts, 'pip', 'wheel', 'poetry'
     ], cwd=p.path.parent)
 
     # Install pytest (eventually we'd want plugin authors to include
@@ -222,7 +222,8 @@ def install_pyln_testing(pip_path):
             cln_path + "/contrib/pyln-client",
             cln_path + "/contrib/pyln-testing",
             "MarkupSafe>=2.0",
-            'itsdangerous>=2.0'
+            'itsdangerous>=2.0',
+            'qrcode==6.1',
         ],
         stderr=subprocess.STDOUT,
     )
