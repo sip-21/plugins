@@ -137,9 +137,9 @@ def prepare_env_poetry(p: Plugin, directory: Path) -> bool:
     logging.info(f"Using poetry at {poetry} ({python3}) to run tests in {workdir}")
 
     # Don't let poetry create a self-managed virtualenv (paths get confusing)
-    # subprocess.check_call([
-    #     poetry, 'config', 'virtualenvs.create', 'false'
-    # ], cwd=workdir)
+    subprocess.check_call([
+        poetry, 'config', 'virtualenvs.create', 'false'
+    ], cwd=workdir)
 
 
     # Now we can proceed with the actual implementation
@@ -272,6 +272,9 @@ def run_one(p: Plugin) -> bool:
         'LC_ALL': 'C.UTF-8',
         'LANG': 'C.UTF-8',
     })
+    pip_path = directory / 'bin' / 'pip3'
+    subprocess.check_call([pip_path, 'list'])
+    subprocess.check_call([pip_path, 'install', 'pytest-timeout'])
     cmd = [str(p) for p in pytest] + [
         '-vvv',
         '--timeout=600',
