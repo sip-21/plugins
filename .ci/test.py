@@ -120,7 +120,7 @@ def prepare_env_poetry(p: Plugin, directory: Path) -> bool:
     subprocess.check_call(['which', 'python3'])
 
     subprocess.check_call([
-        pip3, 'install', '-U', *pip_opts, 'pip', 'wheel', 'poetry'
+        pip3, 'install', '-U', *pip_opts, 'pip', 'wheel', 'poetry=7.4.4'
     ], cwd=p.path.parent)
 
     # Install pytest (eventually we'd want plugin authors to include
@@ -274,10 +274,10 @@ def run_one(p: Plugin) -> bool:
     })
     cmd = [str(p) for p in pytest] + [
         '-vvv',
-        #'--timeout=600',
-        #'--timeout-method=thread',
+        '--timeout=600',
+        '--timeout-method=thread',
         '--color=yes',
-        #'-n=5',
+        '-n=5',
     ]
 
     logging.info(f"Running `{' '.join(cmd)}` in directory {p.path.resolve()}")
