@@ -17,7 +17,7 @@ LICENSE: MIT / APACHE
 """
 import base64
 import multiprocessing
-import qrcode
+# import qrcode
 
 
 from flask import Flask, render_template
