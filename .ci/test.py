@@ -272,7 +272,7 @@ def run_one(p: Plugin) -> bool:
         'LC_ALL': 'C.UTF-8',
         'LANG': 'C.UTF-8',
     })
-    pip_path = directory / 'bin' / 'pip3'
+    pip_path = vpath / 'bin' / 'pip3'
     subprocess.check_call([pip_path, 'list'])
     subprocess.check_call([pip_path, 'install', 'pytest-timeout'])
     cmd = [str(p) for p in pytest] + [
