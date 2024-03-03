@@ -21,6 +21,7 @@ pyln-testing = "^23.11"
 pytest = "^7.4.4"
 pytest-timeout = "^2.2.0"
 pytest-xdist = "^3.5.0"
+qrcode = "6.1"
 
 [build-system]
 requires = ["poetry-core"]
