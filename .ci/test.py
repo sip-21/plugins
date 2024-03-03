@@ -120,16 +120,16 @@ def prepare_env_poetry(p: Plugin, directory: Path) -> bool:
     subprocess.check_call(['which', 'python3'])
 
     subprocess.check_call([
-        pip3, 'install', '-U', *pip_opts, 'pip', 'wheel', 'poetry==1.7.1'
+        pip3, 'install', '-U', *pip_opts, 'pip', 'wheel', 'poetry'
     ], cwd=p.path.parent)
 
     # Install pytest (eventually we'd want plugin authors to include
     # it in their requirements-dev.txt, but for now let's help them a
     # bit).
-    subprocess.check_call(
-        [pip3, 'install', '-U', '-qq', *global_dependencies],
-        stderr=subprocess.STDOUT,
-    )
+    # subprocess.check_call(
+    #     [pip3, 'install', '-U', '-qq', *global_dependencies],
+    #     stderr=subprocess.STDOUT,
+    # )
 
     # We run all commands in the plugin directory so poetry remembers its settings
     workdir = p.path.resolve()
