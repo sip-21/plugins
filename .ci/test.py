@@ -145,7 +145,7 @@ def prepare_env_poetry(p: Plugin, directory: Path) -> bool:
     # Now we can proceed with the actual implementation
     logging.info(f"Installing poetry {poetry} dependencies from {p.details['pyproject']}")
     subprocess.check_call([
-        poetry, 'install', '--with=dev', '--no-interaction',
+        poetry, 'install', '--with', 'dev', '--no-interaction',
     ], cwd=workdir)
 
     subprocess.check_call([pip3, 'freeze'])
