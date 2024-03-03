@@ -22,5 +22,3 @@ pyln-testing = "^23.11"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
-package-mode = false

@@ -137,9 +137,9 @@ def prepare_env_poetry(p: Plugin, directory: Path) -> bool:
     logging.info(f"Using poetry at {poetry} ({python3}) to run tests in {workdir}")
 
     # Don't let poetry create a self-managed virtualenv (paths get confusing)
-    subprocess.check_call([
-        poetry, 'config', 'virtualenvs.create', 'false'
-    ], cwd=workdir)
+    # subprocess.check_call([
+    #     poetry, 'config', 'virtualenvs.create', 'false'
+    # ], cwd=workdir)
 
 
     # Now we can proceed with the actual implementation
