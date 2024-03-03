@@ -23,7 +23,7 @@ exclude = [
 ]
 
 global_dependencies = [
-    'pytest',
+    'pytest==7.4.4',
     'pytest-xdist',
     'pytest-timeout',
 ]
