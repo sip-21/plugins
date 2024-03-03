@@ -18,12 +18,17 @@ werkzeug = "<3"
 wtforms = "2.3.3"
 
 [tool.poetry.dev-dependencies]
-pyln-client = "^23.11"
 pyln-testing = "^23.11"
 pytest = "^7.4.4"
 pytest-timeout = "^2.2.0"
 pytest-xdist = "^3.5.0"
 qrcode = "6.1"
+flask = "2.0.3"
+pyln-client = "^23.11"
+flask-bootstrap = "^3.3.7.1"
+flask-wtf = "0.15.1"
+werkzeug = "<3"
+wtforms = "2.3.3"
 
 [build-system]
 requires = ["poetry-core"]
