@@ -110,16 +110,19 @@ jobs:
             git fetch other-remote
             head_ref="other-remote/${{ github.head_ref }}"
           else
-            git checkout ${{ github.head_ref }}
+            git checkout $head_ref
           fi
 
           # Collect the plugins that have changed.
           plugin_dirs=$(git diff --name-only ${{ github.base_ref }} $head_ref \
             | cut -d '/' -f1 \
+            | uniq \
             | grep -v '^\.' \
             | grep -v 'archived' \
-            | xargs -I {} find {} -maxdepth 0 -type d)
+            | xargs -r -I {} sh -c 'find "{}" -maxdepth 0 -type d -exec echo "{}" \; 2>/dev/null || echo "{}"')
         fi
+
+        git checkout ${{ github.head_ref }}
 
         # Run the tests: In the case of a 'pull_request' event only the plugins in `plugin_dirs`
         # are going to be tested; otherwise ('push' event) we test all plugins.
