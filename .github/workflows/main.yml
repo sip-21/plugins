@@ -115,7 +115,7 @@ jobs:
 
           # Collect the plugins that have changed.
           echo "git diff --name-only ${{ github.base_ref }} $head_ref"
-          tmp=$(git diff --name-only ${{ github.base_ref }} $head_ref | cut -d '/' -f1 | uniq | grep -v '^\.' | grep -v 'archived')
+          tmp=$(git diff --name-only ${{ github.base_ref }} $head_ref | cut -d '/' -f1 | uniq | grep -v '^\.' | grep -v 'archived' | xargs -r -I {} sh -c 'find "{}" -maxdepth 0 -type d -exec echo "{}" \; 2>/dev/null || echo "{}"')
           echo "$tmp"
           plugin_dirs=$(git diff --name-only ${{ github.base_ref }} $head_ref \
             | cut -d '/' -f1 \
