@@ -116,9 +116,10 @@ jobs:
           # Collect the plugins that have changed.
           plugin_dirs=$(git diff --name-only ${{ github.base_ref }} $head_ref \
             | cut -d '/' -f1 \
+            | uniq \
             | grep -v '^\.' \
             | grep -v 'archived' \
-            | xargs -I {} find {} -maxdepth 0 -type d)
+            | xargs -r -I {} sh -c 'find "{}" -maxdepth 0 -type d -exec echo "{}" \; 2>/dev/null || echo "{}"')
         fi
 
         # Run the tests: In the case of a 'pull_request' event only the plugins in `plugin_dirs`
