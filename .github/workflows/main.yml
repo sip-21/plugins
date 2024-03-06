@@ -114,6 +114,9 @@ jobs:
           fi
 
           # Collect the plugins that have changed.
+          echo "git diff --name-only ${{ github.base_ref }} $head_ref"
+          tmp=$(git diff --name-only ${{ github.base_ref }} $head_ref)
+          echo "$tmp"
           plugin_dirs=$(git diff --name-only ${{ github.base_ref }} $head_ref \
             | cut -d '/' -f1 \
             | uniq \
