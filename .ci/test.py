@@ -272,8 +272,9 @@ def run_one(p: Plugin) -> bool:
         'LC_ALL': 'C.UTF-8',
         'LANG': 'C.UTF-8',
     })
+    print("debug: Run pytest -svvv")
     cmd = [str(p) for p in pytest] + [
-        '-vvv',
+        '-svvv',
         '--timeout=600',
         '--timeout-method=thread',
         '--color=yes',
