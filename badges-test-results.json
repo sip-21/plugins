@@ -1,4 +1,13 @@
 {
-  "backup": "passed",
-  "zmq": "failed"
+  "backup":
+    {
+      "color": "green",
+      "value": "passed"
+    }
+}
+  "zmq":
+    {
+      "color": "red",
+      "value": "failed"
+    }
 }
