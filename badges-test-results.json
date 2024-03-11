@@ -6,7 +6,6 @@
     },
   "zmq":
     {
-      "color": "ff0000",
-      "value": "failed"
+      "value": "<span style='background-color:red;'>failed</span>"
     }
 }
