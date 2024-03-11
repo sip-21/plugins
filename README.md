@@ -23,7 +23,7 @@ Community curated plugins for Core-Lightning.
 | [feeadjuster][feeadjuster]           | Dynamic fees to keep your channels more balanced                                            |              |            |
 | [go-lnmetrics.reporter][reporter]    | Collect and report of the lightning node metrics                                            |              |            |
 | [graphql][graphql]                   | Exposes the Core-Lightning API over [graphql][graphql-spec]                                 |              |            |
-| [holdinvoice][holdinvoice]           | Holds htlcs for invoices until settle or cancel is called (aka Hodlinvoices) via RPC/GRPC   |   ✔          |   ✔        |
+| [holdinvoice][holdinvoice]           | Holds htlcs for invoices until settle or cancel is called (aka Hodlinvoices) via RPC/GRPC   |  ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsip-21%2Fplugins%2Fadd-ci-tests-columns-in-readme%2F.badges%2Fholdinvoice) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsip-21%2Fplugins%2Fadd-ci-tests-columns-in-readme%2F.badges%2Fholdinvoice) |
 | [invoice-queue][invoice-queue]       | Listen to lightning invoices from multiple nodes and send to a redis queue for processing   |              |            |
 | [lightning-qt][lightning-qt]         | A bitcoin-qt-like GUI for lightningd                                                        |              |            |
 | [listmempoolfunds][listmempoolfunds] | Track unconfirmed wallet deposits                                                           |              |            |
