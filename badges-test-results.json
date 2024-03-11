@@ -3,13 +3,13 @@
   "backup":
     {
       "schemaVersion": 1,
-      "color": "ff0000",
+      "ccc": "ff0000",
       "value": "✔ passed"
     },
   "zmq":
     {
       "schemaVersion": 1,
       "value": "failed",
-      "color": "ff0000"
+      "ccc": "ff0000"
     }
 }
