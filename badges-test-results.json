@@ -3,8 +3,7 @@
     {
       "color": "green",
       "value": "passed"
-    }
-}
+    },
   "zmq":
     {
       "color": "red",
