@@ -4,12 +4,12 @@
     {
       "schemaVersion": 1,
       "color": "ff0000",
-      "value": "✔ passed",
+      "value": "✔ passed"
     },
   "zmq":
     {
       "schemaVersion": 1,
       "value": "failed",
-      "color": "ff0000",
+      "color": "ff0000"
     }
 }
