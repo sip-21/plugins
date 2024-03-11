@@ -1,7 +1,7 @@
 {
   "backup":
     {
-      "color": "green",
+      "color": "red",
       "value": "passed"
     },
   "zmq":
