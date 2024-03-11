@@ -1,6 +1,8 @@
 {
   "schemaVersion": 1,
-  "ccc": "ff0000",
+  "label": "hello",
+  "message": "sweet world",
+  "color": "orange",
   "backup":
     {
       "schemaVersion": 1,
