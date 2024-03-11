@@ -2,11 +2,11 @@
   "backup":
     {
       "color": "ff0000",
-      "value": "✔"
+      "value": "✔",
     },
   "zmq":
     {
       "value": "failed",
-      "color": "ff0000"
+      "color": "ff0000",
     }
 }
