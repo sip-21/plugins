@@ -6,7 +6,7 @@
     },
   "zmq":
     {
-      "color": "ff0000",
-      "value": "failed"
+      "color": "",
+      "value": ""
     }
 }
