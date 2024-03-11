@@ -13,7 +13,7 @@ Community curated plugins for Core-Lightning.
 | [boltz-channel-creation][boltz]      | A Core-Lightning plugin for Boltz Channel Creation Swaps                                    |              |            |
 | [btcli4j][btcli4j]                   | A Bitcoin Backend to enable safely the pruning mode, and support also rest APIs.            |              |            |
 | [circular][circular]                 | A smart rebalancing plugin for Core Lightning routing nodes                                 |              |            |
-| [clearnet][clearnet]                 | A plugin that can be used to enforce clearnet connections when possible                     |   ✔          |   ✔        |
+| [clearnet][clearnet]                 | A plugin that can be used to enforce clearnet connections when possible                     |   ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsip-21%2Fplugins%2Fadd-ci-tests-columns-in-readme%2F.badges%2Fclearnet) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsip-21%2Fplugins%2Fadd-ci-tests-columns-in-readme%2F.badges%2Fclearnet) |
 | [cln-ntfy][cln-ntfy]                 | Core Lightning plugin for sending `ntfy` alerts.                                            |              |            |
 | [csvexportpays][csvexportpays]       | A plugin that exports all payments to a CSV file                                            |              |            |
 | [currencyrate][currencyrate]         | A plugin to convert other currencies to BTC using web requests                              |              |            |
