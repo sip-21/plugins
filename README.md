@@ -8,7 +8,7 @@ Community curated plugins for Core-Lightning.
 ## Available plugins
 
 | Name                                 | Short description                                                                           | Tests | latest | nightly |
-| ------------------------------------ | ------------------------------------------------------------------------------------------- | :---:        | :---:      | | :---:      |
+| ------------------------------------ | ------------------------------------------------------------------------------------------- | :---: | :---:  | :---:   |
 | [backup][backup]                     | A simple and reliable backup plugin                                                         |  ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fbackup.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fbackup.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fbackup.json) |
 | [boltz-channel-creation][boltz]      | A Core-Lightning plugin for Boltz Channel Creation Swaps                                    |        |            |            |
 | [btcli4j][btcli4j]                   | A Bitcoin Backend to enable safely the pruning mode, and support also rest APIs.            |        |     |            |
