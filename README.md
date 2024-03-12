@@ -18,7 +18,7 @@ Community curated plugins for Core-Lightning.
 | [csvexportpays][csvexportpays]       | A plugin that exports all payments to a CSV file                                            |              |            |
 | [currencyrate][currencyrate]         | A plugin to convert other currencies to BTC using web requests                              |              |            |
 | [datastore][datastore]               | The Datastore Plugin                                                                        |  ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fdatastore.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fdatastore.json) |
-| [donations][donations]               | A simple donations page to accept donations from the web                                    |   ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fdonations) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fdonations.json) |
+| [donations][donations]               | A simple donations page to accept donations from the web                                    |  ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fdonations.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fdonations.json) |
 | [event-websocket][event-websocket]   | Exposes notifications over a Websocket                                                      |              |            |
 | [feeadjuster][feeadjuster]           | Dynamic fees to keep your channels more balanced                                            |              |            |
 | [go-lnmetrics.reporter][reporter]    | Collect and report of the lightning node metrics                                            |              |            |
@@ -27,23 +27,22 @@ Community curated plugins for Core-Lightning.
 | [invoice-queue][invoice-queue]       | Listen to lightning invoices from multiple nodes and send to a redis queue for processing   |              |            |
 | [lightning-qt][lightning-qt]         | A bitcoin-qt-like GUI for lightningd                                                        |              |            |
 | [listmempoolfunds][listmempoolfunds] | Track unconfirmed wallet deposits                                                           |              |            |
-| [monitor][monitor]                   | helps you analyze the health of your peers and channels                                     |   ✔          |   ✔        |
+| [monitor][monitor]                   | helps you analyze the health of your peers and channels                                     |  ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fmonitor.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fmonitor.json) |
 | [nloop][nloop]                       | Generic Lightning Loop for boltz                                                            |              |            |
 | [paythrough][paythrough]             | Pay an invoice through a specific channel, regardless of better routes                      |              |            |
-| [persistent-channels][pers-chans]    | Maintains a number of channels to peers                                                     |   ✔          |   ✔        |
+| [persistent-channels][pers-chans]    | Maintains a number of channels to peers                                                     |  ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fpersistent-channels.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fpersistent-channels.json) |
 | [poncho][poncho]                     | Turns CLN into a [hosted channels][blip12] provider                                         |              |            |
 | [pruning][pruning]                   | This plugin manages pruning of bitcoind such that it can always sync                        |              |            |
 | [python-teos][python-teos]           | The Eye of Satoshi - Lightning Watchtower                                                   |              |            |
 | [reckless][reckless]                 | An **experimental** plugin manager (search/install plugins)                                 |              |            |
 | [sauron][sauron]                     | A Bitcoin backend relying on [Esplora][esplora]'s API                                       |              |            |
 | [sitzprobe][sitzprobe]               | A Lightning Network payment rehearsal utility                                               |              |            |
-| [sling][sling]                       | Rebalance your channels with smart rules and built-in background tasks                      |   ✔          |   ✔        |
+| [sling][sling]                       | Rebalance your channels with smart rules and built-in background tasks                      |  ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fsling.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fsling.json) |
 | [sparko][sparko]                     | RPC over HTTP with fine-grained permissions, SSE and spark-wallet support                   |              |            |
 | [trustedcoin][trustedcoin]           | Replace your Bitcoin Core with data from public block explorers                             |              |            |
 | [watchtower][watchtower-client]      | Watchtower client for The Eye of Satoshi                                                    |              |            |
 | [webhook][webhook]                   | Dispatches webhooks based from [event notifications][event-notifications]                   |              |            |
-| [zmq][zmq]                           | Publishes notifications via [ZeroMQ][zmq-home] to configured endpoints                      |   ![Dynamic JSON Badge](https://img.shields.io/badge/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fzmq.json) | ![Dynamic JSON Badge](https://img.shields.io/badge/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fzmq.json)  |
-
+| [zmq][zmq]                           | Publishes notifications via [ZeroMQ][zmq-home] to configured endpoints                      |  ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fzmq.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fzmq.json) |
 ## Archived plugins
 
 The following is a list of archived plugins that are no longer maintained and reside inside the 'archived' subdirectory.
