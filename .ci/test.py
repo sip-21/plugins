@@ -52,17 +52,17 @@ def enumerate_plugins(basedir: Path) -> Generator[Plugin, None, None]:
         x for x in plugins if (x / Path('requirements.txt')).exists()
     ]
     print("Pip plugins:")
-    print(", ".join([p in pip_pytest]))
+    print(", ".join([p for p in pip_pytest]))
 
     poetry_pytest = [
         x for x in plugins if (x / Path("pyproject.toml")).exists()
     ]
     print("Poetry plugins:")
-    print(", ".join([p in poetry_pytest]))
+    print(", ".join([p for p poetry_pytest]))
 
     other_plugins = [x for x in plugins if x not in pip_pytest and x not in poetry_pytest]
     print("Other plugins:")
-    print(", ".join([p in other_plugins]))
+    print(", ".join([p for p other_plugins]))
 
     for p in sorted(pip_pytest):
         yield Plugin(
