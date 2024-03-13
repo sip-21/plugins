@@ -233,8 +233,8 @@ def update_badges_data(plugin, workflow, failed=False):
     if failed:
         json_data.update({"message": "✗", "color": "red"})
 
-    subprocess.run(["git", "config", "--global", "user.email", "sip21@proton.me"])
-    subprocess.run(["git", "config", "--global", "user.name", "sip21"])
+    subprocess.run(["git", "config", "--global", "user.email", '"sip21@proton.me"'])
+    subprocess.run(["git", "config", "--global", "user.name", '"sip21"'])
     subprocess.run(["git", "fetch"])
     subprocess.run(["git", "checkout", "badges"])
     subprocess.run(["ls"])
