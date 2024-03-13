@@ -18,6 +18,7 @@ exclude = [
     '.ci',
     '.git',
     '.github',
+    'archived',
     'lightning',
     'feeadjuster'
 ]
@@ -50,10 +51,13 @@ def enumerate_plugins(basedir: Path) -> Generator[Plugin, None, None]:
     pip_pytest = [
         x for x in plugins if (x / Path('requirements.txt')).exists()
     ]
+    print("Pip plugins:")
+    print(pip_pytest)
 
     poetry_pytest = [
         x for x in plugins if (x / Path("pyproject.toml")).exists()
     ]
+    print("Poetry plugins:")
     print(poetry_pytest)
 
     other_plugins = [x for x in plugins if x not in pip_pytest and x not in poetry_pytest]
