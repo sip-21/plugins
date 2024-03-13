@@ -233,18 +233,6 @@ def install_pyln_testing(pip_path):
         stderr=subprocess.STDOUT,
     )
 
-def update_badges_data(plugin, workflow, passed=True):
-    print(f"Updating data for {plugin} {workflow} badge...")
-    json_data = { "schemaVersion": 1, "label": "", "message": "✔", "color": "green" }
-    if not passed:
-        json_data.update({"message": "✗", "color": "red"})
-
-    filename = os.path.join("badges", f"{plugin}_{workflow}.json")
-    with open(filename, "w") as file:
-        file.write(json.dumps(json_data))
-
-    subprocess.run(["git", "add", filename])
-    subprocess.run(["git", "commit", "-m", f"Update {plugin} {workflow} badge"])
 
 def run_one(p: Plugin) -> bool:
     print("Running tests on plugin {p.name}".format(p=p))
@@ -340,21 +328,48 @@ def run_all(workflow, args):
     subprocess.run(["git", "fetch"])
     subprocess.run(["git", "checkout", "badges"])
 
+    badges_data = {}
     if not success:
         print("The following tests failed:")
         for t in filter(lambda t: not t[1], results):
             print(" - {p.name} ({p.path})".format(p=t[0]))
-            update_badges_data(t[0].name, workflow, False)
+            badges_data[t[0].name] = False
         for t in filter(lambda t: t[1], results):
-            update_badges_data(t[0].name, workflow)
+            badges_data[t[0].name] = True
         sys.exit(1)
     else:
         print("All tests passed.")
         for t in results:
-            update_badges_data(t[0].name, workflow)
+            badges_data[t[0].name] = True
 
-    print("Pushing badge data.")
+    push_badges_data(data, workflow)
+
+
+def push_badges_data(data, workflow):
+    print("Pushing badge data...")
+
+    subprocess.run(["git", "config", "--global", "user.email", '"sip21@proton.me"'])
+    subprocess.run(["git", "config", "--global", "user.name", '"sip21"'])
+    subprocess.run(["git", "fetch"])
+    subprocess.run(["git", "checkout", "badges"])
+
+    for _data in data:
+        print(f"Updating data for {_data["plugin_name"]} {workflow} badge...")
+
+        json_data = { "schemaVersion": 1, "label": "", "message": "✔", "color": "green" }
+        if not _data["passed"]:
+            json_data.update({"message": "✗", "color": "red"})
+
+        filename = os.path.join("badges", f"{_data["plugin_name"]}_{workflow}.json")
+        with open(filename, "w") as file:
+            file.write(json.dumps(json_data))
+
+        subprocess.run(["git", "add", filename])
+        subprocess.run(["git", "commit", "-m", f"Update {_data["plugin_name"]} {workflow} badge"])
+
     subprocess.run(["git", "push", "origin", "badges"])
+    print("Done.")
+
 
 if __name__ == "__main__":
     run_all(sys.argv[1], sys.argv[2:])
