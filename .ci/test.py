@@ -350,7 +350,7 @@ def push_badges_data(data, workflow):
     subprocess.run(["git", "fetch"])
     subprocess.run(["git", "checkout", "badges"])
 
-    for plugin_name, passed in data:
+    for plugin_name, passed in data.items():
         print(f"Updating data for {plugin_name} badge ({workflow})...")
 
         json_data = { "schemaVersion": 1, "label": "", "message": "✔", "color": "green" }
