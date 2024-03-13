@@ -7,7 +7,7 @@ concurrency:
 
 on:
   push:
-    branches: [ master, add-ci-tests-columns-in-readme ]
+    branches: [ master ]
   pull_request:
 
 jobs:
