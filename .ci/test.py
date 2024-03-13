@@ -232,9 +232,10 @@ def update_badges_data(plugin, workflow, failed=False):
     json_data = { "schemaVersion": 1, "label": "", "message": "✔", "color": "green" }
     if failed:
         json_data.update({"message": "✗", "color": "red"})
+    subprocess.run(["git", "fetch"])
+    subprocess.run(["git", "checkout", "badges"])
     subprocess.run(["ls"])
     subprocess.run(["pwd"])
-    subprocess.run(["git", "checkout", "badges"])
 
     filename = os.path.join("badges", f"{plugin}_{workflow}.json")
     with open(filename, "w") as file:
