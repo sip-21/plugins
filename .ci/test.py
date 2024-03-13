@@ -343,6 +343,7 @@ def run_all(workflow, args):
             update_badges_data(t[0].name, workflow, True)
         sys.exit(1)
     else:
+        print("All tests passed.")
         for p in plugins:
             update_badges_data(p.name, workflow)
 
