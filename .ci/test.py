@@ -331,6 +331,9 @@ def run_all(workflow, args):
             print(" - {p.name} ({p.path})".format(p=t[0]))
             update_badges_data(p.name, workflow, True)
         sys.exit(1)
+    else:
+        for p in plugins:
+            update_badges_data(p, workflow)
 
 if __name__ == "__main__":
     run_all(sys.argv[1], sys.argv[2:])
