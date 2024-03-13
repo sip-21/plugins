@@ -228,6 +228,7 @@ def install_pyln_testing(pip_path):
     )
 
 def update_badges_data(plugin, workflow, failed=False):
+    print(f"Updating {plugin} {workflow} badge...")
     json_data = { "schemaVersion": 1, "label": "", "message": "✔", "color": "green" }
     if failed:
         json_data.update({"message": "✗", "color": "red"})
