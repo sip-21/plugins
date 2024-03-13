@@ -125,7 +125,7 @@ jobs:
 
         # Run the tests: In the case of a 'pull_request' event only the plugins in `plugin_dirs`
         # are going to be tested; otherwise ('push' event) we test all plugins.
-        python3 .ci/test.py $(echo "$plugin_dirs")
+        python3 .ci/test.py main $(echo "$plugin_dirs")
 
   gather:
     # A dummy task that depends on the full matrix of tests, and

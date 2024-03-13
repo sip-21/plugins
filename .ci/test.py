@@ -227,6 +227,15 @@ def install_pyln_testing(pip_path):
         stderr=subprocess.STDOUT,
     )
 
+def update_badges_data(plugin, workflow, failed=False):
+    json_data = { "schemaVersion": 1, "label": "", "message": "✔", "color": "green" }
+    if failed:
+        json_data.update({"message": "✗", "color": "red"})
+
+    subprocess.run(["git", "add", "-f", f"{plugin}_{workflow}.json"], input=json.dumps(json_data).encode(), check=True)
+    subprocess.run(["git", "commit", "-m", f"Update {plugin} {workflow} badge"])
+    subprocess.run(["git", "push", "origin", "badges"])
+
 def run_one(p: Plugin) -> bool:
     print("Running tests on plugin {p.name}".format(p=p))
 
@@ -296,7 +305,7 @@ def run_one(p: Plugin) -> bool:
         print("##[endgroup]")
 
 
-def run_all(args):
+def run_all(workflow, args):
     root_path = subprocess.check_output([
         'git',
         'rev-parse',
@@ -319,7 +328,8 @@ def run_all(args):
         print("The following tests failed:")
         for t in filter(lambda t: not t[1], results):
             print(" - {p.name} ({p.path})".format(p=t[0]))
+            update_badges_data(p.name, workflow, True)
         sys.exit(1)
 
 if __name__ == "__main__":
-    run_all(sys.argv[1:])
+    run_all(sys.argv[1], sys.argv[2:])
