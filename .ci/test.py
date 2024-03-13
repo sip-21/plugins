@@ -326,6 +326,8 @@ def run_all(workflow, args):
     root = Path(root_path)
 
     plugins = list(enumerate_plugins(root))
+    print("enumerate_plugins:")
+    print(enumerate_plugins)
     if args != []:
         plugins = [p for p in plugins if p.name in args]
         print("Testing the following plugins: {names}".format(names=[p.name for p in plugins]))
