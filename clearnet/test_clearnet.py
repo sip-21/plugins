@@ -17,6 +17,7 @@ def test_clearnet_starts(node_factory):
 
 
 def test_clearnet_runs(node_factory):
+    assert False
     pluginopt = {'plugin': plugin_path}
     l1, l2 = node_factory.line_graph(2, opts=pluginopt)
     l1.rpc.clearnet()
