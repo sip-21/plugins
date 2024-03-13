@@ -228,7 +228,7 @@ def install_pyln_testing(pip_path):
     )
 
 def update_badges_data(plugin, workflow, failed=False):
-    print(f"Updating {plugin} {workflow} badge...")
+    print(f"Updating data for {plugin} {workflow} badge...")
     json_data = { "schemaVersion": 1, "label": "", "message": "✔", "color": "green" }
     if failed:
         json_data.update({"message": "✗", "color": "red"})
@@ -329,11 +329,11 @@ def run_all(workflow, args):
         print("The following tests failed:")
         for t in filter(lambda t: not t[1], results):
             print(" - {p.name} ({p.path})".format(p=t[0]))
-            update_badges_data(t[0], workflow, True)
+            update_badges_data(t[0].name, workflow, True)
         sys.exit(1)
     else:
         for p in plugins:
-            update_badges_data(p, workflow)
+            update_badges_data(p.name, workflow)
 
 if __name__ == "__main__":
     run_all(sys.argv[1], sys.argv[2:])
