@@ -43,6 +43,7 @@ Community curated plugins for Core-Lightning.
 | [watchtower][watchtower-client]      | Watchtower client for The Eye of Satoshi                                                    |       |        |         |
 | [webhook][webhook]                   | Dispatches webhooks based from [event notifications][event-notifications]                   |       |        |         |
 | [zmq][zmq]                           | Publishes notifications via [ZeroMQ][zmq-home] to configured endpoints                      |  ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fzmq.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fzmq.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fzmq.json) |
+
 ## Archived plugins
 
 The following is a list of archived plugins that are no longer maintained and reside inside the 'archived' subdirectory.
@@ -62,7 +63,6 @@ If you like a plugin from that list, feel free to update and fix it, so we can u
 | [paytest][paytest]                   | A plugin to benchmark the performance of the ~pay~ plugin                                   |
 | [probe][probe]                       | Regularly probes the network for stability                                                  |
 | [prometheus][prometheus]             | Lightning node exporter for the prometheus timeseries server                                |
-| [rebalance][rebalance]               | Keeps your channels balanced                                                                |
 | [summary][summary]                   | Print a nice summary of the node status                                                     |
 
 ## Installation
@@ -243,7 +243,7 @@ Python plugins developers must ensure their plugin to work with all Python versi
 [python-api]: https://github.com/ElementsProject/lightning/tree/master/contrib/pylightning
 [python-api-pypi]: https://pypi.org/project/pylightning/
 [python-teos]: https://github.com/talaia-labs/python-teos
-[rebalance]: https://github.com/lightningd/plugins/tree/master/archived/rebalance
+[rebalance]: https://github.com/lightningd/plugins/tree/master/rebalance
 [reckless]: https://github.com/darosior/reckless
 [reporter]: https://github.com/LNOpenMetrics/go-lnmetrics.reporter
 [sauron]: https://github.com/lightningd/plugins/tree/master/sauron
