@@ -52,15 +52,17 @@ def enumerate_plugins(basedir: Path) -> Generator[Plugin, None, None]:
         x for x in plugins if (x / Path('requirements.txt')).exists()
     ]
     print("Pip plugins:")
-    print(pip_pytest)
+    print(", ".join([p in pip_pytest]))
 
     poetry_pytest = [
         x for x in plugins if (x / Path("pyproject.toml")).exists()
     ]
     print("Poetry plugins:")
-    print(poetry_pytest)
+    print(", ".join([p in poetry_pytest]))
 
     other_plugins = [x for x in plugins if x not in pip_pytest and x not in poetry_pytest]
+    print("Other plugins:")
+    print(", ".join([p in other_plugins]))
 
     for p in sorted(pip_pytest):
         yield Plugin(
@@ -237,13 +239,6 @@ def update_badges_data(plugin, workflow, passed=True):
     if not passed:
         json_data.update({"message": "✗", "color": "red"})
 
-    subprocess.run(["git", "config", "--global", "user.email", '"sip21@proton.me"'])
-    subprocess.run(["git", "config", "--global", "user.name", '"sip21"'])
-    subprocess.run(["git", "fetch"])
-    subprocess.run(["git", "checkout", "badges"])
-    subprocess.run(["ls"])
-    subprocess.run(["pwd"])
-
     filename = os.path.join("badges", f"{plugin}_{workflow}.json")
     with open(filename, "w") as file:
         file.write(json.dumps(json_data))
@@ -330,8 +325,7 @@ def run_all(workflow, args):
     root = Path(root_path)
 
     plugins = list(enumerate_plugins(root))
-    print("enumerate_plugins:")
-    print(enumerate_plugins)
+
     if args != []:
         plugins = [p for p in plugins if p.name in args]
         print("Testing the following plugins: {names}".format(names=[p.name for p in plugins]))
@@ -340,6 +334,11 @@ def run_all(workflow, args):
 
     results = [(p, run_one(p)) for p in plugins]
     success = all([t[1] for t in results])
+
+    subprocess.run(["git", "config", "--global", "user.email", '"sip21@proton.me"'])
+    subprocess.run(["git", "config", "--global", "user.name", '"sip21"'])
+    subprocess.run(["git", "fetch"])
+    subprocess.run(["git", "checkout", "badges"])
 
     if not success:
         print("The following tests failed:")
@@ -354,6 +353,7 @@ def run_all(workflow, args):
         for t in results:
             update_badges_data(t[0].name, workflow)
 
+    print("Pushing badge data.")
     subprocess.run(["git", "push", "origin", "badges"])
 
 if __name__ == "__main__":
