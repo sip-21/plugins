@@ -329,7 +329,7 @@ def run_all(workflow, args):
         print("The following tests failed:")
         for t in filter(lambda t: not t[1], results):
             print(" - {p.name} ({p.path})".format(p=t[0]))
-            update_badges_data(p.name, workflow, True)
+            update_badges_data(t[0], workflow, True)
         sys.exit(1)
     else:
         for p in plugins:
