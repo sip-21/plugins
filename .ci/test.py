@@ -339,7 +339,7 @@ def run_all(workflow, args):
         for t in results:
             badges_data[t[0].name] = True
 
-    push_badges_data(data, workflow)
+    push_badges_data(badges_data, workflow)
 
 
 def push_badges_data(data, workflow):
