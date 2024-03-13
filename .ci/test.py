@@ -51,18 +51,15 @@ def enumerate_plugins(basedir: Path) -> Generator[Plugin, None, None]:
     pip_pytest = [
         x for x in plugins if (x / Path('requirements.txt')).exists()
     ]
-    print("Pip plugins:")
-    print(", ".join([p.name for p in pip_pytest]))
+    print(f'Pip plugins: {", ".join([p.name for p in sorted(pip_pytest)])}')
 
     poetry_pytest = [
         x for x in plugins if (x / Path("pyproject.toml")).exists()
     ]
-    print("Poetry plugins:")
-    print(", ".join([p.name for p in poetry_pytest]))
+    print(f'Poetry plugins: {", ".join([p.name for p in sorted(poetry_pytest)])}')
 
     other_plugins = [x for x in plugins if x not in pip_pytest and x not in poetry_pytest]
-    print("Other plugins:")
-    print(", ".join([p.name for p in other_plugins]))
+    print(f'Other plugins: {", ".join([p.name for p in sorted(other_plugins)])}')
 
     for p in sorted(pip_pytest):
         yield Plugin(
@@ -353,19 +350,19 @@ def push_badges_data(data, workflow):
     subprocess.run(["git", "fetch"])
     subprocess.run(["git", "checkout", "badges"])
 
-    for _data in data:
-        print(f"Updating data for {_data["plugin_name"]} {workflow} badge...")
+    for plugin_name, passed in data:
+        print(f"Updating data for {plugin_name} badge ({workflow})...")
 
         json_data = { "schemaVersion": 1, "label": "", "message": "✔", "color": "green" }
-        if not _data["passed"]:
+        if passed:
             json_data.update({"message": "✗", "color": "red"})
 
-        filename = os.path.join("badges", f"{_data["plugin_name"]}_{workflow}.json")
+        filename = os.path.join("badges", f"{plugin_name}_{workflow}.json")
         with open(filename, "w") as file:
             file.write(json.dumps(json_data))
 
         subprocess.run(["git", "add", filename])
-        subprocess.run(["git", "commit", "-m", f"Update {_data["plugin_name"]} {workflow} badge"])
+        subprocess.run(["git", "commit", "-m", f"Update {plugin_name} badge ({workflow})"])
 
     subprocess.run(["git", "push", "origin", "badges"])
     print("Done.")
