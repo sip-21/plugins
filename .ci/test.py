@@ -239,7 +239,7 @@ def testfiles(p: Plugin) -> list[PosixPath]:
     ]
 
 def has_testfiles(p: Plugin) -> bool:
-    return len(testfiles) > 0
+    return len(testfiles(p)) > 0
 
 def run_one(p: Plugin) -> bool:
     print("Running tests on plugin {p.name}".format(p=p))
