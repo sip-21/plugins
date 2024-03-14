@@ -348,7 +348,8 @@ def run_all(workflow, args):
             if has_testfiles(t[0]):
                 badges_data[t[0].name] = True
 
-    push_badges_data(badges_data, workflow)
+    if sys.version_info[0:2] == (3, 12):
+        push_badges_data(badges_data, workflow)
 
 
 def push_badges_data(data, workflow):
@@ -362,7 +363,7 @@ def push_badges_data(data, workflow):
     for plugin_name, passed in data.items():
         print(f"Updating badge data for {plugin_name} ({workflow})...")
 
-        json_data = { "schemaVersion": 1, "label": "", "message": "✔", "color": "green" }
+        json_data = { "schemaVersion": 1, "label": "", "message": " ✔ ", "color": "green" }
         if passed:
             json_data.update({"message": "✗", "color": "red"})
 
