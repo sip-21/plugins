@@ -231,7 +231,7 @@ def install_pyln_testing(pip_path):
     )
 
 
-def testfiles(p: Plugin) -> List[PosixPath]:
+def testfiles(p: Plugin) -> list[PosixPath]:
     return [
         x for x in p.path.iterdir()
         if (x.is_dir() and x.name == 'tests')
