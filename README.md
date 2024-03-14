@@ -7,43 +7,44 @@ Community curated plugins for Core-Lightning.
 
 ## Available plugins
 
-| Name                                 | Short description                                                                           |
-| ------------------------------------ | ------------------------------------------------------------------------------------------- |
-| [backup][backup]                     | A simple and reliable backup plugin                                                         |
-| [boltz-channel-creation][boltz]      | A Core-Lightning plugin for Boltz Channel Creation Swaps                                    |
-| [btcli4j][btcli4j]                   | A Bitcoin Backend to enable safely the pruning mode, and support also rest APIs.            |
-| [circular][circular]                 | A smart rebalancing plugin for Core Lightning routing nodes                                 |
-| [clearnet][clearnet]                 | A plugin that can be used to enforce clearnet connections when possible                     |
-| [cln-ntfy][cln-ntfy]                 | Core Lightning plugin for sending `ntfy` alerts.                                            |
-| [csvexportpays][csvexportpays]       | A plugin that exports all payments to a CSV file                                            |
-| [currencyrate][currencyrate]         | A plugin to convert other currencies to BTC using web requests                              |
-| [donations][donations]               | A simple donations page to accept donations from the web                                    |
-| [event-websocket][event-websocket]   | Exposes notifications over a Websocket                                                      |
-| [feeadjuster][feeadjuster]           | Dynamic fees to keep your channels more balanced                                            |
-| [go-lnmetrics.reporter][reporter]    | Collect and report of the lightning node metrics                                            |
-| [graphql][graphql]                   | Exposes the Core-Lightning API over [graphql][graphql-spec]                                 |
-| [holdinvoice][holdinvoice]           | Holds htlcs for invoices until settle or cancel is called (aka Hodlinvoices) via RPC/GRPC   |
-| [invoice-queue][invoice-queue]       | Listen to lightning invoices from multiple nodes and send to a redis queue for processing   |
-| [lightning-qt][lightning-qt]         | A bitcoin-qt-like GUI for lightningd                                                        |
-| [listmempoolfunds][listmempoolfunds] | Track unconfirmed wallet deposits                                                           |
-| [monitor][monitor]                   | helps you analyze the health of your peers and channels                                     |
-| [nloop][nloop]                       | Generic Lightning Loop for boltz                                                            |
-| [paythrough][paythrough]             | Pay an invoice through a specific channel, regardless of better routes                      |
-| [persistent-channels][pers-chans]    | Maintains a number of channels to peers                                                     |
-| [poncho][poncho]                     | Turns CLN into a [hosted channels][blip12] provider                                         |
-| [pruning][pruning]                   | This plugin manages pruning of bitcoind such that it can always sync                        |
-| [python-teos][python-teos]           | The Eye of Satoshi - Lightning Watchtower                                                   |
-| [rebalance][rebalance]               | Keeps your channels balanced                                                                |
-| [reckless][reckless]                 | An **experimental** plugin manager (search/install plugins)                                 |
-| [sauron][sauron]                     | A Bitcoin backend relying on [Esplora][esplora]'s API                                       |
-| [sitzprobe][sitzprobe]               | A Lightning Network payment rehearsal utility                                               |
-| [sling][sling]                       | Rebalance your channels with smart rules and built-in background tasks                      |
-| [sparko][sparko]                     | RPC over HTTP with fine-grained permissions, SSE and spark-wallet support                   |
-| [summars][summars]                   | Print configurable summary of node, channels and optionally forwards, invoices, payments    |
-| [trustedcoin][trustedcoin]           | Replace your Bitcoin Core with data from public block explorers                             |
-| [watchtower][watchtower-client]      | Watchtower client for The Eye of Satoshi                                                    |
-| [webhook][webhook]                   | Dispatches webhooks based from [event notifications][event-notifications]                   |
-| [zmq][zmq]                           | Publishes notifications via [ZeroMQ][zmq-home] to configured endpoints                      |
+| Name                                 | Short description                                                                           | Latest | Nightly |
+| ------------------------------------ | ------------------------------------------------------------------------------------------- | :----: | :-----: |
+| [backup][backup]                     | A simple and reliable backup plugin                                                         | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fbackup_latest.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fbackup_nightly.json) |
+| [boltz-channel-creation][boltz]      | A Core-Lightning plugin for Boltz Channel Creation Swaps                                    |        |         |
+| [btcli4j][btcli4j]                   | A Bitcoin Backend to enable safely the pruning mode, and support also rest APIs.            |        |         |
+| [circular][circular]                 | A smart rebalancing plugin for Core Lightning routing nodes                                 |        |         |
+| [clearnet][clearnet]                 | A plugin that can be used to enforce clearnet connections when possible                     | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fclearnet_latest.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fclearnet_nightly.json) |
+| [cln-ntfy][cln-ntfy]                 | Core Lightning plugin for sending `ntfy` alerts.                                            |        |         |
+| [csvexportpays][csvexportpays]       | A plugin that exports all payments to a CSV file                                            |        |         |
+| [currencyrate][currencyrate]         | A plugin to convert other currencies to BTC using web requests                              |        |         |
+| [datastore][datastore]               | The Datastore Plugin                                                                        | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fdatastore_latest.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fdatastore_nightly.json) |
+| [donations][donations]               | A simple donations page to accept donations from the web                                    | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fdonations_latest.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fdonations_nightly.json) |
+| [event-websocket][event-websocket]   | Exposes notifications over a Websocket                                                      |        |         |
+| [feeadjuster][feeadjuster]           | Dynamic fees to keep your channels more balanced                                            | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Ffeeadjuster_latest.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Ffeeadjuster_nightly.json) |
+| [go-lnmetrics.reporter][reporter]    | Collect and report of the lightning node metrics                                            |        |         |
+| [graphql][graphql]                   | Exposes the Core-Lightning API over [graphql][graphql-spec]                                 |        |         |
+| [holdinvoice][holdinvoice]           | Holds htlcs for invoices until settle or cancel is called (aka Hodlinvoices) via RPC/GRPC   | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fholdinvoice_latest.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fholdinvoice_nightly.json) |
+| [invoice-queue][invoice-queue]       | Listen to lightning invoices from multiple nodes and send to a redis queue for processing   |        |         |
+| [lightning-qt][lightning-qt]         | A bitcoin-qt-like GUI for lightningd                                                        |        |         |
+| [listmempoolfunds][listmempoolfunds] | Track unconfirmed wallet deposits                                                           |        |         |
+| [monitor][monitor]                   | helps you analyze the health of your peers and channels                                     | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fmonitor_latest.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fmonitor_nightly.json) |
+| [nloop][nloop]                       | Generic Lightning Loop for boltz                                                            |        |         |
+| [paythrough][paythrough]             | Pay an invoice through a specific channel, regardless of better routes                      |        |         |
+| [persistent-channels][pers-chans]    | Maintains a number of channels to peers                                                     | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fpersistent-channels_latest.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fpersistent-channels_nightly.json) |
+| [poncho][poncho]                     | Turns CLN into a [hosted channels][blip12] provider                                         |        |         |
+| [pruning][pruning]                   | This plugin manages pruning of bitcoind such that it can always sync                        |        |         |
+| [python-teos][python-teos]           | The Eye of Satoshi - Lightning Watchtower                                                   |        |         |
+| [rebalance][rebalance]               | Keeps your channels balanced                                                                | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Frebalance_latest.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Frebalance_nightly.json) |
+| [reckless][reckless]                 | An **experimental** plugin manager (search/install plugins)                                 |        |         |
+| [sauron][sauron]                     | A Bitcoin backend relying on [Esplora][esplora]'s API                                       |        |         |
+| [sitzprobe][sitzprobe]               | A Lightning Network payment rehearsal utility                                               |        |         |
+| [sling][sling]                       | Rebalance your channels with smart rules and built-in background tasks                      | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fsling_latest.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fsling_nightly.json) |
+| [sparko][sparko]                     | RPC over HTTP with fine-grained permissions, SSE and spark-wallet support                   |        |         |
+| [summars][summars]                   | Print configurable summary of node, channels and optionally forwards, invoices, payments    | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fsummars_latest.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fsummars_nightly.json) |
+| [trustedcoin][trustedcoin]           | Replace your Bitcoin Core with data from public block explorers                             |        |         |
+| [watchtower][watchtower-client]      | Watchtower client for The Eye of Satoshi                                                    |        |         |
+| [webhook][webhook]                   | Dispatches webhooks based from [event notifications][event-notifications]                   |        |         |
+| [zmq][zmq]                           | Publishes notifications via [ZeroMQ][zmq-home] to configured endpoints                      | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fzmq_latest.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fzmq_nightly.json) |
 
 ## Archived plugins
 
@@ -197,7 +198,7 @@ Python plugins developers must ensure their plugin to work with all Python versi
  - [Kotlin plugin guideline and example][kotlin-example] by @vincenzopalazzo
 
 [autopilot]: https://github.com/lightningd/plugins/tree/master/archived/autopilot
-[backup]: https://github.com/lightningd/plugins/tree/master/archived/backup
+[backup]: https://github.com/lightningd/plugins/tree/master/backup
 [blip12]: https://github.com/lightning/blips/blob/42cec1d0f66eb68c840443abb609a5a9acb34f8e/blip-0012.md
 [boltz]: https://github.com/BoltzExchange/channel-creation-plugin
 [btcli4j]: https://github.com/clightning4j/btcli4j
@@ -210,7 +211,8 @@ Python plugins developers must ensure their plugin to work with all Python versi
 [csharp-example]: https://github.com/joemphilips/DotNetLightning/tree/master/examples/HelloWorldPlugin
 [csvexportpays]: https://github.com/0xB10C/c-lightning-plugin-csvexportpays
 [currencyrate]: https://github.com/lightningd/plugins/tree/master/currencyrate
-[donations]: https://github.com/lightningd/plugins/tree/master/archived/donations
+[datastore]: https://github.com/lightningd/plugins/tree/master/datastore
+[donations]: https://github.com/lightningd/plugins/tree/master/donations
 [drain]: https://github.com/lightningd/plugins/tree/master/archived/drain
 [esplora]: https://github.com/Blockstream/esplora
 [event-notifications]: https://lightning.readthedocs.io/PLUGINS.html#event-notifications
