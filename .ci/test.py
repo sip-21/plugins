@@ -1,4 +1,4 @@
-from pathlib import Path
+from pathlib import Path, PosixPath
 import subprocess
 from pprint import pprint
 from collections import namedtuple
@@ -231,16 +231,22 @@ def install_pyln_testing(pip_path):
     )
 
 
-def run_one(p: Plugin) -> bool:
-    print("Running tests on plugin {p.name}".format(p=p))
-
-    testfiles = [
+def testfiles(p: Plugin) -> List[PosixPath]:
+    return [
         x for x in p.path.iterdir()
         if (x.is_dir() and x.name == 'tests')
         or (x.name.startswith("test_") and x.name.endswith('.py'))
     ]
 
-    if len(testfiles) == 0:
+def has_testfiles(p: Plugin) -> bool:
+    return len(testfiles) > 0
+
+def run_one(p: Plugin) -> bool:
+    print("Running tests on plugin {p.name}".format(p=p))
+
+    testfiles == testfiles(p)
+
+    if not has_testfiles(p):
         print("No test files found, skipping plugin {p.name}".format(p=p))
         return True
 
@@ -329,10 +335,14 @@ def run_all(workflow, args):
     if not success:
         print("The following tests failed:")
         for t in filter(lambda t: not t[1], results):
-            print(" - {p.name} ({p.path})".format(p=t[0]))
-            badges_data[t[0].name] = False
+            p = t[0]
+            print(f" - {p.name} ({p.path})")
+            if has_testfiles(p):
+                badges_data[p.name] = False
         for t in filter(lambda t: t[1], results):
-            badges_data[t[0].name] = True
+            p = t[0]
+            if has_testfiles(p):
+                badges_data[p.name] = True
         sys.exit(1)
     else:
         print("All tests passed.")
@@ -351,7 +361,7 @@ def push_badges_data(data, workflow):
     subprocess.run(["git", "checkout", "badges"])
 
     for plugin_name, passed in data.items():
-        print(f"Updating data for {plugin_name} badge ({workflow})...")
+        print(f"Updating badge data for {plugin_name} ({workflow})...")
 
         json_data = { "schemaVersion": 1, "label": "", "message": "✔", "color": "green" }
         if passed:
