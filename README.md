@@ -34,6 +34,7 @@ Community curated plugins for Core-Lightning.
 | [poncho][poncho]                     | Turns CLN into a [hosted channels][blip12] provider                                         |       |        |         |
 | [pruning][pruning]                   | This plugin manages pruning of bitcoind such that it can always sync                        |       |        |         |
 | [python-teos][python-teos]           | The Eye of Satoshi - Lightning Watchtower                                                   |       |        |         |
+| [rebalance][rebalance]               | Keeps your channels balanced                                                                | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Frebalance.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Frebalance_latest.json) | ![Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Frebalance_nightly.json) |
 | [reckless][reckless]                 | An **experimental** plugin manager (search/install plugins)                                 |       |        |         |
 | [sauron][sauron]                     | A Bitcoin backend relying on [Esplora][esplora]'s API                                       |       |        |         |
 | [sitzprobe][sitzprobe]               | A Lightning Network payment rehearsal utility                                               |       |        |         |
