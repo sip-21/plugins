@@ -10,6 +10,7 @@ import sys
 import tempfile
 import shlex
 import os
+from typing import List
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
@@ -230,7 +231,7 @@ def install_pyln_testing(pip_path):
     )
 
 
-def get_testfiles(p: Plugin) -> list[PosixPath]:
+def get_testfiles(p: Plugin) -> List[PosixPath]:
     return [
         x for x in p.path.iterdir()
         if (x.is_dir() and x.name == 'tests')
