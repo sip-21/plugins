@@ -3,6 +3,7 @@ name: Nightly Integration Tests (master)
 on:
   schedule:
     - cron: "21 2 * * *"
+  pull_request:
 
 jobs:
   nightly-build-and-test:
