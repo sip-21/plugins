@@ -231,7 +231,7 @@ def install_pyln_testing(pip_path):
     )
 
 
-def testfiles(p: Plugin) -> list[PosixPath]:
+def get_testfiles(p: Plugin) -> list[PosixPath]:
     return [
         x for x in p.path.iterdir()
         if (x.is_dir() and x.name == 'tests')
@@ -239,18 +239,16 @@ def testfiles(p: Plugin) -> list[PosixPath]:
     ]
 
 def has_testfiles(p: Plugin) -> bool:
-    return len(testfiles(p)) > 0
+    return len(get_testfiles(p)) > 0
 
 def run_one(p: Plugin) -> bool:
     print("Running tests on plugin {p.name}".format(p=p))
-
-    testfiles == testfiles(p)
 
     if not has_testfiles(p):
         print("No test files found, skipping plugin {p.name}".format(p=p))
         return True
 
-    print("Found {ctestfiles} test files, creating virtualenv and running tests".format(ctestfiles=len(testfiles)))
+    print("Found {ctestfiles} test files, creating virtualenv and running tests".format(ctestfiles=len(get_testfiles(p))))
     print("##[group]{p.name}".format(p=p))
 
     # Create a virtual env
