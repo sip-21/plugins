@@ -20,7 +20,6 @@ exclude = [
     '.github',
     'archived',
     'lightning',
-    'feeadjuster'
 ]
 
 global_dependencies = [
