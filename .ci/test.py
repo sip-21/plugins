@@ -361,7 +361,7 @@ def push_badges_data(data, workflow):
 
     for plugin_name, passed in data.items():
         print(f"Updating badge data for {plugin_name} ({workflow})...")
-        print(passed)
+
         json_data = { "schemaVersion": 1, "label": "", "message": " ✔ ", "color": "green" }
         if not passed:
             json_data.update({"message": "✗", "color": "red"})
