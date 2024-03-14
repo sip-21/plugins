@@ -345,7 +345,8 @@ def run_all(workflow, args):
     else:
         print("All tests passed.")
         for t in results:
-            badges_data[t[0].name] = True
+            if has_testfiles(t[0]):
+                badges_data[t[0].name] = True
 
     push_badges_data(badges_data, workflow)
 
