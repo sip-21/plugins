@@ -105,7 +105,7 @@ jobs:
             update_badges='--update-badges'
         fi
 
-        python3 .ci/test.py latest $update_badges $(echo "$plugin_dirs")
+        python3 .ci/test.py main $update_badges $(echo "$plugin_dirs")
 
   gather:
     # A dummy task that depends on the full matrix of tests, and
