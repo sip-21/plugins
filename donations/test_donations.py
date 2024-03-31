@@ -26,3 +26,5 @@ def test_donation_server(node_factory):
     l1.daemon.wait_for_log("plugin-donations.py:.*Running on all addresses")
     msg = l1.rpc.donationserver("stop", port)
     assert msg == f'stopped server on port {port}'
+
+#
