@@ -7,7 +7,7 @@ Community curated plugins for Core-Lightning.
 
 ## Available plugins
 
-| Name                                 | Short description                                                                           | Main ![GitHub Release](https://img.shields.io/github/v/release/ElementsProject/lightning?label=%20&color=393D47) | Nigthly ![Static Badge](https://img.shields.io/badge/master-master?color=393D47) |
+| Name                                 | Short description                                                                           | CLN ![GitHub Release](https://img.shields.io/github/v/release/ElementsProject/lightning?label=%20&color=393D47) | CLN ![Static Badge](https://img.shields.io/badge/master-master?color=393D47) |
 | ------------------------------------ | ------------------------------------------------------------------------------------------- | :----: | :-----: |
 | [backup][backup]                     | A simple and reliable backup plugin                                                         | ![](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fbackup_main.json) | ![](https://img.shields.io/endpoint?url=https%3A%2F%2Fsip-21.github.io%2Fplugins%2Fbadges%2Fbackup_nightly.json) |
 | [boltz-channel-creation][boltz]      | A Core-Lightning plugin for Boltz Channel Creation Swaps                                    |        |         |
