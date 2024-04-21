@@ -382,6 +382,8 @@ def push_badges_data(data, workflow):
         subprocess.run(["git", "push", "origin", "badges"])
     print("Done.")
 
+def main(args):
+    return run_all(args.workflow, args.update_badges, args.plugins)
 
 if __name__ == "__main__":
     import argparse
@@ -392,4 +394,4 @@ if __name__ == "__main__":
     parser.add_argument("plugins", nargs="*", default=[], help="List of plugins")
     args = parser.parse_args()
 
-    return run_all(args.workflow, args.update_badges, args.plugins)
+    main(args)
