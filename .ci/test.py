@@ -71,16 +71,16 @@ def enumerate_plugins(basedir: Path) -> Generator[Plugin, None, None]:
             }
         )
 
-    for p in sorted(poetry_pytest):
-        yield Plugin(
-            name=p.name,
-            path=p,
-            language="python",
-            framework="poetry",
-            details={
-                "pyproject": p / Path("pyproject.toml"),
-            }
-        )
+    # for p in sorted(poetry_pytest):
+    #     yield Plugin(
+    #         name=p.name,
+    #         path=p,
+    #         language="python",
+    #         framework="poetry",
+    #         details={
+    #             "pyproject": p / Path("pyproject.toml"),
+    #         }
+    #     )
 
     for p in sorted(other_plugins):
         yield Plugin(
