@@ -392,4 +392,4 @@ if __name__ == "__main__":
     parser.add_argument("plugins", nargs="*", default=[], help="List of plugins")
     args = parser.parse_args()
 
-    run_all(args.workflow, args.update_badges, args.plugins)
+    return run_all(args.workflow, args.update_badges, args.plugins)
