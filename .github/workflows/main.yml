@@ -82,6 +82,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
 
     - name: Run pytest tests
+      id: pytest_tests
       run: |
         export CLN_PATH=${{ github.workspace }}/lightning
         export COMPAT=${{ matrix.deprecated }}
@@ -105,7 +106,10 @@ jobs:
             update_badges='--update-badges'
         fi
 
-        python3 .ci/test.py main $update_badges $(echo "$plugin_dirs")
+        echo "::set-output name=data::$(python3 .ci/test.py main $update_badges $(echo "$plugin_dirs"))
+
+    - name: Set output for badges data
+        run: echo "::set-output name=output_key::${{ steps.pytest_tests.outputs.data }}"
 
   gather:
     # A dummy task that depends on the full matrix of tests, and
@@ -118,4 +122,5 @@ jobs:
     steps:
       - name: Complete
         run: |
+          python3 .ci/update_badges.py ${{ needs.build-and-test.outputs.my_output_key }} main
           echo CI completed successfully
