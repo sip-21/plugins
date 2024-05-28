@@ -106,7 +106,7 @@ jobs:
             update_badges='--update-badges'
         fi
 
-        echo "::set-output name=data::$(python3 .ci/test.py main $update_badges $(echo $plugin_dirs))"
+        python3 .ci/test.py main $update_badges $(echo "$plugin_dirs")
 
     - name: Set output for badges data
         run: echo "::set-output name=output_key::${{ steps.pytest_tests.outputs.data }}"
