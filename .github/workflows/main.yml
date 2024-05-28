@@ -108,9 +108,6 @@ jobs:
 
         python3 .ci/test.py main $update_badges $(echo "$plugin_dirs")
 
-    - name: Set output for badges data
-        run: echo "::set-output name=output_key::${{ steps.pytest_tests.outputs.data }}"
-
   gather:
     # A dummy task that depends on the full matrix of tests, and
     # signals successful completion. Used for the PR status to pass
