@@ -117,7 +117,7 @@ def update_and_commit_badge(plugin_name, passed, workflow):
 
 
 def push_badges_data(workflow, num_of_python_versions):
-    print("Pushing badge data...")
+    print("Pushing badges data...")
     configure_git()
     subprocess.run(["git", "fetch"])
     subprocess.run(["git", "checkout", "badges"])
@@ -128,19 +128,15 @@ def push_badges_data(workflow, num_of_python_versions):
         .decode("ASCII")
         .strip()
     )
-
-    root = Path(root_path)
-
-    plugins = list(enumerate_plugins(root))
+    plugins = list(enumerate_plugins(Path(root_path)))
 
     any_changes = False
     for plugin_name in plugins:
-        print(plugin_name)
         results = []
         for child in Path(f"badges/gather_data/main/{plugin_name}").iterdir():
             print(child)
             results.append(child.read_text().strip())
-        print(results)
+        print(f"Results for {plugin_name}: {results}")
         passed = False
         if (
             len(set(results)) == 1
