@@ -131,8 +131,7 @@ def push_badges_data(workflow, num_of_python_versions):
 
     root = Path(root_path)
 
-    # plugins = list(enumerate_plugins(root))
-    plugins = ["clearnet", "zmq"]
+    plugins = list(enumerate_plugins(root))
 
     any_changes = False
     for plugin_name in plugins:
