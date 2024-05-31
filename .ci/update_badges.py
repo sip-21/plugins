@@ -133,18 +133,18 @@ def push_badges_data(workflow, num_of_python_versions):
     any_changes = False
     for plugin_name in plugins:
         results = []
-        for child in Path(f"badges/gather_data/main/{plugin_name}").iterdir():
-            print(child)
-            results.append(child.read_text().strip())
-        print(f"Results for {plugin_name}: {results}")
+        for child in Path(f"badges/gather_data/main/{plugin.name}").iterdir():
+            result = child.read_text().strip()
+            results.append(result)
+            print(f"Results for {child}: {result}")
         passed = False
         if (
             len(set(results)) == 1
-            # and len(results) == num_of_python_versions
             and results[0] == "passed"
+            # and len(results) == num_of_python_versions  # TODO: Disabled as gather data for python versions is missing sporadingly.
         ):
             passed = True
-        any_changes |= update_and_commit_badge(plugin_name, passed, workflow)
+        any_changes |= update_and_commit_badge(plugin.name, passed, workflow)
 
     if any_changes:
         subprocess.run(["git", "push", "origin", "badges"])
