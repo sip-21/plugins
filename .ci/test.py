@@ -354,7 +354,7 @@ def push_gather_data(data, workflow, python_version):
 
 
 def git_add_gather_data(plugin_name, result, workflow, python_version):
-    _dir = f"badges/gather_data/{workflow}/{plugin_name}"
+    _dir = f".badges/gather_data/{workflow}/{plugin_name}"
     filename = os.path.join(_dir, f"python{python_version}.txt")
     os.makedirs(_dir, exist_ok=True)
     with open(filename, "w") as file:
