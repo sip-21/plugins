@@ -105,7 +105,7 @@ def update_and_commit_badge(plugin_name, passed, workflow):
     if not passed:
         json_data.update({"message": "✗", "color": "red"})
 
-    filename = os.path.join("badges", f"{plugin_name}_{workflow}.json")
+    filename = os.path.join(".badges", f"{plugin_name}_{workflow}.json")
     with open(filename, "w") as file:
         file.write(json.dumps(json_data))
 
@@ -133,7 +133,7 @@ def push_badges_data(workflow, num_of_python_versions):
     any_changes = False
     for plugin_name in plugins:
         results = []
-        for child in Path(f"badges/gather_data/main/{plugin.name}").iterdir():
+        for child in Path(f".badges/gather_data/main/{plugin.name}").iterdir():
             result = child.read_text().strip()
             results.append(result)
             print(f"Results for {child}: {result}")
