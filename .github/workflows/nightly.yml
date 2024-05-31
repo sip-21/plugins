@@ -111,5 +111,5 @@ jobs:
       - name: Complete
         run: |
           echo "Updating badges data..."
-          python3 .ci/update_badges.py main 5
+          python3 .ci/update_badges.py main 5  # We test for 5 distinct Python versions
           echo "CI completed"
