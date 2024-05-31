@@ -308,8 +308,9 @@ def run_one(p: Plugin) -> bool:
         print("##[endgroup]")
 
 def configure_git():
+    # Git requires some user and email to be configured in order to work in the context of GitHub Actions.
     subprocess.run(
-        ["git", "config", "--global", "user.email", '"lightningd@plugins.repo"']
+        ["git", "config", "--global", "user.email", '"lightningd@github.plugins.repo"']
     )
     subprocess.run(["git", "config", "--global", "user.name", '"lightningd"'])
 
