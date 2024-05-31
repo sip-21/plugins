@@ -7,7 +7,7 @@ Community curated plugins for Core-Lightning.
 
 ## Available plugins
 
-| Name                                 | Short description                                                                           | CLN ![GitHub Release](https://img.shields.io/github/v/release/ElementsProject/lightning?label=%20&color=393D47) | CLN ![Static Badge](https://img.shields.io/badge/master-master?color=393D47) |
+| Name                                 | Short description                                                                           | CLN<br>![GitHub Release](https://img.shields.io/github/v/release/ElementsProject/lightning?label=%20&color=393D47) | CLN<br>![Static Badge](https://img.shields.io/badge/master-master?color=393D47) |
 | ------------------------------------ | ------------------------------------------------------------------------------------------- | :----: | :-----: |
 | [backup][backup]                     | A simple and reliable backup plugin                                                         | ![](https://img.shields.io/endpoint?url=https%3A%2F%2Flightningd.github.io%2Fplugins%2F.badges%2Fbackup_main.json) | ![](https://img.shields.io/endpoint?url=https%3A%2F%2Flightningd.github.io%2Fplugins%2F.badges%2Fbackup_nightly.json) |
 | [btcli4j][btcli4j]                   | A Bitcoin Backend to enable safely the pruning mode, and support also rest APIs.            |        |         |
