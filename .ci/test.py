@@ -71,7 +71,10 @@ def prepare_env_poetry(p: Plugin, directory: Path) -> bool:
     # Now we can proceed with the actual implementation
     logging.info(f"Installing poetry {poetry} dependencies from {p.details['pyproject']}")
     subprocess.check_call([
-        poetry, 'install', '--with=dev', '--no-interaction',
+        poetry, 'config', 'solver.lazy-wheel', 'false',
+    ], cwd=workdir)
+    subprocess.check_call([
+        poetry, 'install', '--with', 'dev', '--no-interaction',
     ], cwd=workdir)
 
     subprocess.check_call([pip3, 'freeze'])
@@ -150,7 +153,8 @@ def install_pyln_testing(pip_path):
             cln_path + "/contrib/pyln-client",
             cln_path + "/contrib/pyln-testing",
             "MarkupSafe>=2.0",
-            'itsdangerous>=2.0'
+            'itsdangerous>=2.0',
+            'qrcode==6.1',
         ],
         stderr=subprocess.STDOUT,
     )
