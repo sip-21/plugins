@@ -45,6 +45,24 @@ def init(plugin, options, **kwargs):
         raise SauronError("You need to specify the sauron-api-endpoint option.")
         sys.exit(1)
 
+    # Test for Esplora or mempoolspace
+    try:
+        # MutinyNet API
+        feerate_url = "{}/v1/fees/recommended".format(plugin.api_endpoint)
+        feerate_req = fetch(feerate_url)
+        assert feerate_req.status_code == 200
+        plugin.is_mempoolspace = True
+    except AssertionError as e0:
+        try:
+            # Blockstream API
+            feerate_url = "{}/fee-estimates".format(plugin.api_endpoint)
+            feerate_req = fetch(feerate_url)
+            assert feerate_req.status_code == 200
+            plugin.is_mempoolspace = False
+        except AssertionError as e1:
+            raise Exception("Sauron API cannot be reached") from e1
+
+
     if options["sauron-tor-proxy"]:
         address, port = options["sauron-tor-proxy"].split(":")
         socks5_proxy = "socks5h://{}:{}".format(address, port)
@@ -163,24 +181,29 @@ def sendrawtx(plugin, tx, **kwargs):
 @plugin.method("getutxout")
 def getutxout(plugin, address, txid, vout, **kwargs):
     # Determine the API endpoint type based on the URL structure
-    if "mutinynet" in plugin.api_endpoint:
+    if plugin.is_mempoolspace:
         # MutinyNet API
-        utxo_url = "{}/address/{}/utxo".format(plugin.api_endpoint, address)
+        gettx_url = "{}/address/{}/utxo".format(plugin.api_endpoint, address)
+    else:
+        # Blockstream API
+        gettx_url = "{}/tx/{}".format(plugin.api_endpoint, txid)
+        status_url = "{}/tx/{}/outspend/{}".format(plugin.api_endpoint, txid, vout)
 
-        # Fetch the list of UTXOs for the given address
-        utxo_req = fetch(utxo_url)
-        if not utxo_req.status_code == 200:
-            raise SauronError(
-                "Endpoint at {} returned {} ({}) when trying to get UTXOs.".format(
-                    utxo_url, utxo_req.status_code, utxo_req.text
-                )
+    # Fetch the list of UTXOs for the given address
+    gettx_req = fetch(gettx_url)
+    if not gettx_req.status_code == 200:
+        raise SauronError(
+            "Endpoint at {} returned {} ({}) when trying to get transaction.".format(
+                gettx_url, gettx_req.status_code, gettx_req.text
             )
-
+        )
+    if plugin.is_mempoolspace:
+        # Building response from MutinyNet API
         # Parse the UTXO data
-        utxos = utxo_req.json()
+        utxos = gettx_req.json()
         # Find the UTXO with the given txid and vout
         for utxo in utxos:
-            if utxo['txid'] == txid and utxo['vout'] == vout:
+            if utxo['txid'] == txid:
                 return {
                     "amount": utxo["value"],
                     "script": None  # MutinyNet API does not provide script information
@@ -191,19 +214,8 @@ def getutxout(plugin, address, txid, vout, **kwargs):
             "amount": None,
             "script": None
         }
-
     else:
-        # Blockstream API
-        gettx_url = "{}/tx/{}".format(plugin.api_endpoint, txid)
-        status_url = "{}/tx/{}/outspend/{}".format(plugin.api_endpoint, txid, vout)
-
-        gettx_req = fetch(gettx_url)
-        if not gettx_req.status_code == 200:
-            raise SauronError(
-                "Endpoint at {} returned {} ({}) when trying to get transaction.".format(
-                    gettx_url, gettx_req.status_code, gettx_req.text
-                )
-            )
+        # Building response from Blockstream API
         status_req = fetch(status_url)
         if not status_req.status_code == 200:
             raise SauronError(
@@ -229,18 +241,15 @@ def getutxout(plugin, address, txid, vout, **kwargs):
 @plugin.method("estimatefees")
 def estimatefees(plugin, **kwargs):
     # Define the URL based on the selected API
-    if "mutinynet" in plugin.api_endpoint:
+    if plugin.is_mempoolspace:
         # MutinyNet API
         feerate_url = "{}/v1/fees/recommended".format(plugin.api_endpoint)
-        plugin.log("estimatefees: plugin.api_endpoint = %s" % plugin.api_endpoint)
-        plugin.log("estimatefees: feerate_url = %s" % feerate_url)
-
     else:
         # Blockstream API
         feerate_url = "{}/fee-estimates".format(plugin.api_endpoint)
-        plugin.log("estimatefees: plugin.api_endpoint = %s" % plugin.api_endpoint)
-        plugin.log("estimatefees: feerate_url = %s" % feerate_url)     
 
+    plugin.log("estimatefees: plugin.api_endpoint = %s" % plugin.api_endpoint)
+    plugin.log("estimatefees: feerate_url = %s" % feerate_url)
     feerate_req = fetch(feerate_url)
     assert feerate_req.status_code == 200
     feerates = feerate_req.json()
