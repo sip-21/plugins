@@ -17,7 +17,7 @@ class SauronError(Exception):
     pass
 
 def fetch(url):
-    """Fetch this {url}, maybe through a pre-defined proxy."""
+    """Fetch the given {url}, maybe through a pre-defined proxy."""
     # FIXME: Maybe try to be smart and renew circuit to broadcast different
     # transactions ? Hint: lightningd will agressively send us the same
     # transaction a certain amount of times.
@@ -79,6 +79,7 @@ def init(plugin, options, **kwargs):
 def getchaininfo(plugin, **kwargs):
     blockhash_url = "{}/block-height/0".format(plugin.api_endpoint)
     blockcount_url = "{}/blocks/tip/height".format(plugin.api_endpoint)
+
     chains = {
         "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f": "main",
         "000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943": "test",
@@ -117,7 +118,9 @@ def getchaininfo(plugin, **kwargs):
 
 @plugin.method("getrawblockbyheight")
 def getrawblock(plugin, height, **kwargs):
+    # Step 1: Get the block hash by height
     blockhash_url = "{}/block-height/{}".format(plugin.api_endpoint, height)
+
     blockhash_req = fetch(blockhash_url)
     if blockhash_req.status_code != 200:
         return {
@@ -278,6 +281,7 @@ def estimatefees(plugin, **kwargs):
         {"blocks": 144, "feerate": slow}
     ]
 
+    # Return the estimated fees
     return {
         "opening": normal,
         "mutual_close": normal,
@@ -295,6 +299,7 @@ plugin.add_option(
     "sauron-api-endpoint",
     "",
     "The URL of the esplora instance to hit (including '/api').",
+    "The URL of the mutinynet instance to hit (including '/api').",
 )
 
 plugin.add_option(
