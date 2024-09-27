@@ -47,21 +47,20 @@ def init(plugin, options, **kwargs):
 
     # Test for Esplora or mempoolspace
     try:
-        # MutinyNet API
-        feerate_url = "{}/v1/fees/recommended".format(plugin.api_endpoint)
+        # Esplora API
+        feerate_url = "{}/fee-estimates".format(plugin.api_endpoint)
         feerate_req = fetch(feerate_url)
         assert feerate_req.status_code == 200
-        plugin.is_mempoolspace = True
+        plugin.is_mempoolspace = False
     except AssertionError as e0:
         try:
-            # Blockstream API
-            feerate_url = "{}/fee-estimates".format(plugin.api_endpoint)
+            # MutinyNet API
+            feerate_url = "{}/v1/fees/recommended".format(plugin.api_endpoint)
             feerate_req = fetch(feerate_url)
             assert feerate_req.status_code == 200
-            plugin.is_mempoolspace = False
+            plugin.is_mempoolspace = True
         except AssertionError as e1:
             raise Exception("Sauron API cannot be reached") from e1
-
 
     if options["sauron-tor-proxy"]:
         address, port = options["sauron-tor-proxy"].split(":")
@@ -298,8 +297,7 @@ def estimatefees(plugin, **kwargs):
 plugin.add_option(
     "sauron-api-endpoint",
     "",
-    "The URL of the esplora instance to hit (including '/api').",
-    "The URL of the mutinynet instance to hit (including '/api').",
+    "The URL of the esplora or mempool.space instance to hit (including '/api').",
 )
 
 plugin.add_option(
