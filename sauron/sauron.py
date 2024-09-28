@@ -51,9 +51,9 @@ def init(plugin, options, **kwargs):
         # Esplora API
         feerate_url = "{}/fee-estimates".format(plugin.api_endpoint)
         feerate_req = fetch(feerate_url)
-        assert feerate_req.status_code == 200
+        assert feerate_req.status_code == 200 and feerate_req.content != b'{}'
         plugin.is_mempoolspace = False
-    except AssertionError as e0:
+    except AssertionError:
         try:
             # MutinyNet API
             feerate_url = "{}/v1/fees/recommended".format(plugin.api_endpoint)
@@ -72,7 +72,8 @@ def init(plugin, options, **kwargs):
         }
         plugin.log("Using proxy {} for requests".format(socks5_proxy))
 
-    plugin.log("Sauron plugin initialized")
+    api = "mempool.space" if plugin.is_mempoolspace else "Esplora"
+    plugin.log(f"Sauron plugin initialized using {api} API")
     plugin.log(sauron_eye)
 
 
@@ -215,7 +216,7 @@ def estimatefees(plugin, **kwargs):
     feerate_req = fetch(feerate_url)
     assert feerate_req.status_code == 200
     feerates = feerate_req.json()
-    if plugin.sauron_network == "test" or plugin.sauron_network == "signet":
+    if plugin.sauron_network in ["test", "signet"]:
         # FIXME: remove the hack if the test API is "fixed"
         feerate = feerates.get("144", 1)
         slow = normal = urgent = very_urgent = int(feerate * 10**3)
@@ -259,7 +260,7 @@ plugin.add_option(
     "",
     "Tor's SocksPort address in the form address:port, don't specify the"
     " protocol.  If you didn't modify your torrc you want to put"
-    "'localhost:9050' here.",
+    " 'localhost:9050' here.",
 )
 
 
