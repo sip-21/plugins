@@ -2,22 +2,24 @@
 import requests
 import sys
 import time
-from pprint import pprint
 
-from urllib3.util.retry import Retry
+from requests.packages.urllib3.util.retry import Retry
 from requests.adapters import HTTPAdapter
 from art import sauron_eye
 from pyln.client import Plugin
+
 
 plugin = Plugin(dynamic=False)
 plugin.sauron_socks_proxies = None
 plugin.sauron_network = "test"
 
+
 class SauronError(Exception):
     pass
 
+
 def fetch(url):
-    """Fetch the given {url}, maybe through a pre-defined proxy."""
+    """Fetch this {url}, maybe through a pre-defined proxy."""
     # FIXME: Maybe try to be smart and renew circuit to broadcast different
     # transactions ? Hint: lightningd will agressively send us the same
     # transaction a certain amount of times.
@@ -36,11 +38,10 @@ def fetch(url):
 
     return session.get(url)
 
+
 @plugin.init()
 def init(plugin, options, **kwargs):
     plugin.api_endpoint = options.get("sauron-api-endpoint", None)
-    plugin.log("plugin.api_endpoint = %s" % plugin.api_endpoint)
-    
     if not plugin.api_endpoint:
         raise SauronError("You need to specify the sauron-api-endpoint option.")
         sys.exit(1)
@@ -74,11 +75,11 @@ def init(plugin, options, **kwargs):
     plugin.log("Sauron plugin initialized")
     plugin.log(sauron_eye)
 
+
 @plugin.method("getchaininfo")
 def getchaininfo(plugin, **kwargs):
     blockhash_url = "{}/block-height/0".format(plugin.api_endpoint)
     blockcount_url = "{}/blocks/tip/height".format(plugin.api_endpoint)
-
     chains = {
         "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f": "main",
         "000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943": "test",
@@ -115,11 +116,10 @@ def getchaininfo(plugin, **kwargs):
         "ibd": False,
     }
 
+
 @plugin.method("getrawblockbyheight")
 def getrawblock(plugin, height, **kwargs):
-    # Step 1: Get the block hash by height
     blockhash_url = "{}/block-height/{}".format(plugin.api_endpoint, height)
-
     blockhash_req = fetch(blockhash_url)
     if blockhash_req.status_code != 200:
         return {
@@ -127,11 +127,7 @@ def getrawblock(plugin, height, **kwargs):
             "block": None,
         }
 
-    block_hash = blockhash_req.text.strip()  # Ensure no extra spaces or newlines
-
-    # Step 2: Determine the block URL and fetch the block data
-    block_url = "{}/block/{}/raw".format(plugin.api_endpoint, block_hash)
-
+    block_url = "{}/block/{}/raw".format(plugin.api_endpoint, blockhash_req.text)
     while True:
         block_req = fetch(block_url)
         if block_req.status_code != 200:
@@ -151,22 +147,16 @@ def getrawblock(plugin, height, **kwargs):
         plugin.log("Esplora gave us an incomplete block, retrying in 2s", level="error")
         time.sleep(2)
 
-    plugin.log("block_req = %s" % pprint(vars(block_req)))
-    
-    # Step 3: Process the block data
-    # Blockstream and Mutinynet returns raw binary data
-    block_data = block_req.content.hex()
-    plugin.log("block_data = %s" % block_data)
-
     return {
-        "blockhash": block_hash,
-        "block": block_data,
+        "blockhash": blockhash_req.text,
+        "block": block_req.content.hex(),
     }
 
 
 @plugin.method("sendrawtransaction")
 def sendrawtx(plugin, tx, **kwargs):
     sendtx_url = "{}/tx".format(plugin.api_endpoint)
+
     sendtx_req = requests.post(sendtx_url, data=tx)
     if sendtx_req.status_code != 200:
         return {
@@ -181,68 +171,40 @@ def sendrawtx(plugin, tx, **kwargs):
 
 
 @plugin.method("getutxout")
-def getutxout(plugin, address, txid, vout, **kwargs):
-    # Determine the API endpoint type based on the URL structure
-    if plugin.is_mempoolspace:
-        # MutinyNet API
-        gettx_url = "{}/address/{}/utxo".format(plugin.api_endpoint, address)
-    else:
-        # Blockstream API
-        gettx_url = "{}/tx/{}".format(plugin.api_endpoint, txid)
-        status_url = "{}/tx/{}/outspend/{}".format(plugin.api_endpoint, txid, vout)
+def getutxout(plugin, txid, vout, **kwargs):
+    gettx_url = "{}/tx/{}".format(plugin.api_endpoint, txid)
+    status_url = "{}/tx/{}/outspend/{}".format(plugin.api_endpoint, txid, vout)
 
-    # Fetch the list of UTXOs for the given address
     gettx_req = fetch(gettx_url)
     if not gettx_req.status_code == 200:
         raise SauronError(
-            "Endpoint at {} returned {} ({}) when trying to get transaction.".format(
+            "Endpoint at {} returned {} ({}) when trying to " "get transaction.".format(
                 gettx_url, gettx_req.status_code, gettx_req.text
             )
         )
-    if plugin.is_mempoolspace:
-        # Building response from MutinyNet API
-        # Parse the UTXO data
-        utxos = gettx_req.json()
-        # Find the UTXO with the given txid and vout
-        for utxo in utxos:
-            if utxo['txid'] == txid:
-                return {
-                    "amount": utxo["value"],
-                    "script": None  # MutinyNet API does not provide script information
-                }
+    status_req = fetch(status_url)
+    if not status_req.status_code == 200:
+        raise SauronError(
+            "Endpoint at {} returned {} ({}) when trying to " "get utxo status.".format(
+                status_url, status_req.status_code, status_req.text
+            )
+        )
 
-        # If the specific UTXO is not found
+    if status_req.json()["spent"]:
         return {
             "amount": None,
-            "script": None
-        }
-    else:
-        # Building response from Blockstream API
-        status_req = fetch(status_url)
-        if not status_req.status_code == 200:
-            raise SauronError(
-                "Endpoint at {} returned {} ({}) when trying to get UTXO status.".format(
-                    status_url, status_req.status_code, status_req.text
-                )
-            )
-
-        if status_req.json()["spent"]:
-            return {
-                "amount": None,
-                "script": None
-            }
-
-        txo = gettx_req.json()["vout"][vout]
-        return {
-            "amount": txo["value"],
-            "script": txo["scriptpubkey"]
+            "script": None,
         }
 
+    txo = gettx_req.json()["vout"][vout]
+    return {
+        "amount": txo["value"],
+        "script": txo["scriptpubkey"],
+    }
 
 
 @plugin.method("estimatefees")
 def estimatefees(plugin, **kwargs):
-    # Define the URL based on the selected API
     if plugin.is_mempoolspace:
         # MutinyNet API
         feerate_url = "{}/v1/fees/recommended".format(plugin.api_endpoint)
@@ -250,29 +212,21 @@ def estimatefees(plugin, **kwargs):
         # Blockstream API
         feerate_url = "{}/fee-estimates".format(plugin.api_endpoint)
 
-    plugin.log("estimatefees: plugin.api_endpoint = %s" % plugin.api_endpoint)
-    plugin.log("estimatefees: feerate_url = %s" % feerate_url)
     feerate_req = fetch(feerate_url)
     assert feerate_req.status_code == 200
     feerates = feerate_req.json()
-    plugin.log("estimatefees: feerates = %s" % feerates)
-
-    # Define the multiply factor for sat/vB to sat/kVB conversion
-    multiply_factor = 10**3
-
-    if plugin.sauron_network in ["test", "signet"]:
-        # Apply the fallback for test/signet networks
+    if plugin.sauron_network == "test" or plugin.sauron_network == "signet":
+        # FIXME: remove the hack if the test API is "fixed"
         feerate = feerates.get("144", 1)
-        slow = normal = urgent = very_urgent = int(feerate * multiply_factor)
+        slow = normal = urgent = very_urgent = int(feerate * 10**3)
     else:
-        # Adjust fee rates based on the specific API
         # It returns sat/vB, we want sat/kVB, so multiply everything by 10**3
-        slow = int(feerates["144"] * multiply_factor)
-        normal = int(feerates["12"] * multiply_factor)
-        urgent = int(feerates["6"] * multiply_factor)
-        very_urgent = int(feerates["2"] * multiply_factor)
+        slow = int(feerates["144"] * 10**3)
+        normal = int(feerates["12"] * 10**3)
+        urgent = int(feerates["6"] * 10**3)
+        very_urgent = int(feerates["2"] * 10**3)
 
-    feerate_floor = int(feerates.get("1008", slow) * multiply_factor)
+    feerate_floor = int(feerates.get("1008", slow) * 10**3)
     feerates = [
         {"blocks": 2, "feerate": very_urgent},
         {"blocks": 6, "feerate": urgent},
@@ -280,7 +234,6 @@ def estimatefees(plugin, **kwargs):
         {"blocks": 144, "feerate": slow}
     ]
 
-    # Return the estimated fees
     return {
         "opening": normal,
         "mutual_close": normal,
@@ -293,6 +246,7 @@ def estimatefees(plugin, **kwargs):
         "feerate_floor": feerate_floor,
         "feerates": feerates
     }
+
 
 plugin.add_option(
     "sauron-api-endpoint",
