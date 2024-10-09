@@ -5,7 +5,8 @@ import os
 import pyln
 import pytest
 from pyln.testing import utils
-from util import *  # noqa: F403
+from pyln.testing.fixtures import *  # noqa: F403
+from util import LightningD
 
 pyln.testing.fixtures.network_daemons["signet"] = utils.BitcoinD
 

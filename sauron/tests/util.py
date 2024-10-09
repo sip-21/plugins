@@ -1,8 +1,6 @@
 import logging
 
-import pytest
 from pyln.testing import utils
-from pyln.testing.fixtures import *  # noqa: F403
 
 
 class LightningD(utils.LightningD):
