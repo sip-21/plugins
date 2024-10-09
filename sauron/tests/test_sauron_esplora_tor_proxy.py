@@ -36,7 +36,7 @@ def node_cls(monkeypatch):
     monkeypatch.setenv("TEST_NETWORK", "bitcoin")
     yield LightningNode
 
-
+@pytest.mark.skip(reason="TODO: Mock tor")
 def test_tor_proxy(ln_node):
     """
     Test for tor proxy
