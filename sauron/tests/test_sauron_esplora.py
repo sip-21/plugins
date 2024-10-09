@@ -2,7 +2,6 @@
 
 import os
 
-os.environ["TEST_NETWORK"] = "bitcoin"
 import pyln
 import pytest
 from pyln.testing import utils
@@ -13,6 +12,7 @@ pyln.testing.fixtures.network_daemons["bitcoin"] = utils.BitcoinD
 
 class LightningNode(utils.LightningNode):
     def __init__(self, *args, **kwargs):
+        pyln.testing.utils.TEST_NETWORK = "bitcoin"
         utils.LightningNode.__init__(self, *args, **kwargs)
         lightning_dir = args[1]
 
@@ -31,7 +31,8 @@ class LightningNode(utils.LightningNode):
 
 
 @pytest.fixture
-def node_cls():
+def node_cls(monkeypatch):
+    monkeypatch.setenv("TEST_NETWORK", "bitcoin")
     yield LightningNode
 
 
