@@ -27,8 +27,3 @@ class LightningD(utils.LightningD):
         if wait_for_initialized:
             self.wait_for_log("Server started with public key")
         logging.info("LightningD started")
-
-
-@pytest.fixture
-def ln_node(node_factory):  # noqa: F811
-    yield node_factory.get_node()

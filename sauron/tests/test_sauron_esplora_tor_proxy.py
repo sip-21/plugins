@@ -37,10 +37,11 @@ def node_cls(monkeypatch):
     yield LightningNode
 
 @pytest.mark.skip(reason="TODO: Mock tor")
-def test_tor_proxy(ln_node):
+def test_tor_proxy(node_factory):
     """
     Test for tor proxy
     """
+    ln_node = node_factory.get_node()
 
     assert ln_node.daemon.opts["sauron-tor-proxy"] == "localhost:9050"
     assert ln_node.daemon.is_in_log("Using proxy socks5h://localhost:9050 for requests")

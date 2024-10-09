@@ -36,10 +36,11 @@ def node_cls(monkeypatch):
     yield LightningNode
 
 
-def test_rpc_getchaininfo(ln_node):
+def test_rpc_getchaininfo(node_factory):
     """
     Test getchaininfo
     """
+    ln_node = node_factory.get_node()
 
     response = ln_node.rpc.call("getchaininfo")
 
@@ -51,10 +52,11 @@ def test_rpc_getchaininfo(ln_node):
     assert not response["ibd"]
 
 
-def test_rpc_getrawblockbyheight(ln_node):
+def test_rpc_getrawblockbyheight(node_factory):
     """
     Test getrawblockbyheight
     """
+    ln_node = node_factory.get_node()
 
     response = ln_node.rpc.call("getrawblockbyheight", {"height": 0})
 
@@ -65,10 +67,11 @@ def test_rpc_getrawblockbyheight(ln_node):
     assert response == expected_response
 
 
-def test_rpc_sendrawtransaction_invalid(ln_node):
+def test_rpc_sendrawtransaction_invalid(node_factory):
     """
     Test sendrawtransaction
     """
+    ln_node = node_factory.get_node()
 
     expected_response = {
         "errmsg": 'sendrawtransaction RPC error: {"code":-22,"message":"TX decode failed. Make sure the tx has at least one input."}',
@@ -82,10 +85,11 @@ def test_rpc_sendrawtransaction_invalid(ln_node):
     assert response == expected_response
 
 
-def test_rpc_getutxout(ln_node):
+def test_rpc_getutxout(node_factory):
     """
     Test getutxout
     """
+    ln_node = node_factory.get_node()
 
     expected_response = {
         "amount": 5000000000,
@@ -102,10 +106,11 @@ def test_rpc_getutxout(ln_node):
     assert response == expected_response
 
 
-def test_rpc_estimatefees(ln_node):
+def test_rpc_estimatefees(node_factory):
     """
     Test estimatefees
     """
+    ln_node = node_factory.get_node()
 
     # Sample response
     # {
