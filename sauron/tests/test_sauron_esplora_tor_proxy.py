@@ -37,7 +37,6 @@ def node_cls(monkeypatch):
     yield LightningNode
 
 
-@pytest.mark.skip(reason="TODO: Mock tor")
 def test_tor_proxy(node_factory):
     """
     Test for tor proxy
