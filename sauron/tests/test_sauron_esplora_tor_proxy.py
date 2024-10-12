@@ -43,11 +43,25 @@ def test_tor_proxy(node_factory):
     Test for tor proxy
     """
     import subprocess
-    from subprocess import STDOUT
-    proc = subprocess.Popen('sudo apt install -y tor', shell=True, stdin=None, stdout=open(os.devnull,"wb"), stderr=STDOUT, executable="/bin/bash")
+
+    proc = subprocess.Popen(
+        "sudo apt install -y tor",
+        shell=True,
+        stdin=None,
+        stdout=open(os.devnull, "wb"),
+        stderr=subprocess.STDOUT,
+        executable="/bin/bash",
+    )
     proc.wait()
 
     ln_node = node_factory.get_node()
 
     assert ln_node.daemon.opts["sauron-tor-proxy"] == "localhost:9050"
     assert ln_node.daemon.is_in_log("Using proxy socks5h://localhost:9050 for requests")
+
+    response = ln_node.rpc.call("getchaininfo")
+
+    expected_response_keys = ["chain", "blockcount", "headercount", "ibd"]
+    assert list(response.keys()) == expected_response_keys
+    assert response["chain"] == "main"
+    assert not response["ibd"]
