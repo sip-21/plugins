@@ -42,14 +42,6 @@ def test_tor_proxy(node_factory):
     """
     Test for tor proxy
     """
-    import subprocess
-    import time
-
-    subprocess.call(
-        ["sudo", "apt", "install", "tor"]
-    )
-    time.sleep(10)
-
     ln_node = node_factory.get_node()
 
     assert ln_node.daemon.opts["sauron-tor-proxy"] == "localhost:9050"
