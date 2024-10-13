@@ -43,16 +43,12 @@ def test_tor_proxy(node_factory):
     Test for tor proxy
     """
     import subprocess
+    import time
 
-    proc = subprocess.Popen(
-        "sudo apt install -y tor",
-        shell=True,
-        stdin=None,
-        stdout=open(os.devnull, "wb"),
-        stderr=subprocess.STDOUT,
-        executable="/bin/bash",
+    subprocess.call(
+        ["sudo", "apt", "install", "tor"]
     )
-    proc.wait()
+    time.sleep(10)
 
     ln_node = node_factory.get_node()
 
