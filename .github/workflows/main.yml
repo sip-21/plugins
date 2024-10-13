@@ -89,6 +89,8 @@ jobs:
         sudo mkdir /usr/local/libexec/c-lightning/plugins
         sudo chown -R $USER /usr/local/libexec
 
+        sudo apt install tor
+
     - name: Restore bitcoind cache
       id: cache-bitcoind
       if: ${{ github.event_name == 'push' || steps.set_plugin_dirs.outputs.run_ci == 'true' }}
