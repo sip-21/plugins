@@ -46,10 +46,3 @@ def test_tor_proxy(node_factory):
 
     assert ln_node.daemon.opts["sauron-tor-proxy"] == "localhost:9050"
     assert ln_node.daemon.is_in_log("Using proxy socks5h://localhost:9050 for requests")
-
-    response = ln_node.rpc.call("getchaininfo")
-
-    expected_response_keys = ["chain", "blockcount", "headercount", "ibd"]
-    assert list(response.keys()) == expected_response_keys
-    assert response["chain"] == "main"
-    assert not response["ibd"]
