@@ -1,4 +1,4 @@
 #!/bin/bash
 
-sudo apt update -y
-sudo apt -y install tor
+sudo apt update
+sudo apt install tor
