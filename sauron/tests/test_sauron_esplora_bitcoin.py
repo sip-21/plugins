@@ -45,7 +45,7 @@ def test_rpc_getchaininfo(node_factory):
 
     response = ln_node.rpc.call("getchaininfo")
 
-    assert ln_node.daemon.wait_for_log("Sauron plugin initialized using Esplora API")
+    assert ln_node.daemon.is_in_log("Sauron plugin initialized using Esplora API")
 
     expected_response_keys = ["chain", "blockcount", "headercount", "ibd"]
     assert list(response.keys()) == expected_response_keys
