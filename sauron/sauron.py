@@ -40,11 +40,22 @@ def fetch(url):
 
 
 @plugin.init()
-def init(plugin, options, configuration, **kwargs):
-    plugin.api_endpoint = options["sauron-api-endpoint"]
+def init(plugin, options, **kwargs):
+    plugin.api_endpoint = options.get("sauron-api-endpoint", None)
     if not plugin.api_endpoint:
         raise SauronError("You need to specify the sauron-api-endpoint option.")
         sys.exit(1)
+
+    # Testing for Esplora or mempool.space API
+    try:
+        # MutinyNet API
+        feerate_url = "{}/v1/fees/recommended".format(plugin.api_endpoint)
+        feerate_req = fetch(feerate_url)
+        assert feerate_req.status_code == 200
+        plugin.is_mempoolspace = True
+    except AssertionError:
+        # Esplora API
+        plugin.is_mempoolspace = False
 
     if options["sauron-tor-proxy"]:
         address, port = options["sauron-tor-proxy"].split(":")
@@ -55,7 +66,8 @@ def init(plugin, options, configuration, **kwargs):
         }
         plugin.log("Using proxy {} for requests".format(socks5_proxy))
 
-    plugin.log("Sauron plugin initialized")
+    api = "mempool.space" if plugin.is_mempoolspace else "Esplora"
+    plugin.log(f"Sauron plugin initialized using {api} API")
     plugin.log(sauron_eye)
 
 
@@ -188,12 +200,17 @@ def getutxout(plugin, txid, vout, **kwargs):
 
 @plugin.method("estimatefees")
 def estimatefees(plugin, **kwargs):
-    feerate_url = "{}/fee-estimates".format(plugin.api_endpoint)
+    if plugin.is_mempoolspace:
+        # MutinyNet API
+        feerate_url = "{}/v1/fees/recommended".format(plugin.api_endpoint)
+    else:
+        # Blockstream API
+        feerate_url = "{}/fee-estimates".format(plugin.api_endpoint)
 
     feerate_req = fetch(feerate_url)
     assert feerate_req.status_code == 200
     feerates = feerate_req.json()
-    if plugin.sauron_network == "test" or plugin.sauron_network == "signet":
+    if plugin.sauron_network in ["test", "signet"]:
         # FIXME: remove the hack if the test API is "fixed"
         feerate = feerates.get("144", 1)
         slow = normal = urgent = very_urgent = int(feerate * 10**3)
@@ -204,7 +221,7 @@ def estimatefees(plugin, **kwargs):
         urgent = int(feerates["6"] * 10**3)
         very_urgent = int(feerates["2"] * 10**3)
 
-    feerate_floor = int(feerates["1008"] * 10**3)
+    feerate_floor = int(feerates.get("1008", slow) * 10**3)
     feerates = [
         {"blocks": 2, "feerate": very_urgent},
         {"blocks": 6, "feerate": urgent},
@@ -229,7 +246,7 @@ def estimatefees(plugin, **kwargs):
 plugin.add_option(
     "sauron-api-endpoint",
     "",
-    "The URL of the esplora instance to hit (including '/api').",
+    "The URL of the esplora or mempool.space instance to hit (including '/api').",
 )
 
 plugin.add_option(
@@ -237,7 +254,7 @@ plugin.add_option(
     "",
     "Tor's SocksPort address in the form address:port, don't specify the"
     " protocol.  If you didn't modify your torrc you want to put"
-    "'localhost:9050' here.",
+    " 'localhost:9050' here.",
 )
 
 
